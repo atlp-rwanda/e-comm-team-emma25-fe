@@ -1,0 +1,8 @@
+@font-face{ 
+    font-family: "Alkatra-Bold";
+    src: url("../fonts/Alkatra-Bold.ttf");
+}
+h1{
+    color: green;
+    font-family:   "Alkatra-Bold"
+}

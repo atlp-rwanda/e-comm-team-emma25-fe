@@ -1,0 +1,14 @@
+{
+    "extends": [
+        "airbnb-typescript"
+    ],
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": "warn"
+    },
+    "env": {
+      "es6": true,
+      "node": true
+    }
+  }
+  
