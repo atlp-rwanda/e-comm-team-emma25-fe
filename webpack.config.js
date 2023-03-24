@@ -18,6 +18,20 @@ module.exports =[{
         exclude: /node_modules/,
         use:'ts-loader',
       },
+       {
+          test: /\.scss$/,
+          use: [
+            {
+              loader: 'style-loader',
+            },
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ],
+        },
       {
         test: /\.(js|jsx)?$/,
         exclude: /node_modules/,
@@ -48,5 +62,8 @@ module.exports =[{
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
-  ]
+  ],
+  devServer: {
+    historyApiFallback: true,
+  },
 }];

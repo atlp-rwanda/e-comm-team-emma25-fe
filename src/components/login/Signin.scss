@@ -1,0 +1,78 @@
+.login-container {
+  background: white;
+  width: 38%;
+  height: 50%;
+  padding: 50px 25px;
+  margin-top: 25px;
+  margin-left: 25rem;
+  border-radius: 10px;
+}
+
+.form-buttons {
+  width: 100%;
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: bolder;
+  margin-top: -3rem;
+}
+
+.form-buttons button {
+  width: 50%;
+  padding: 10px;
+}
+.email{
+  margin-left: 6rem;
+}
+.email input{
+  width: 18rem;
+  // height: 2rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  background-color: #F5F5F5;
+  
+}
+
+.password{
+  margin-left: 6rem;
+  margin-top: 1rem;
+}
+.password input{
+  width: 18rem;
+  // height: 2rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #F5F5F5;
+  
+}
+
+.shop{
+  border: black;
+  margin-top: 5rem;
+  margin-left: -4rem;
+}
+.form-buttons h2 h3{
+  margin-top: 2rem;
+}
+
+.forgot{
+  margin-left: 18rem;
+}
+.sign-btn{
+  margin-left: 11rem;
+  
+}
+.sign-btn button{
+  width: 10rem;
+  height: 2rem;
+  color: #fff;
+  background-color: #E78120;
+  border: #fff;
+  border-radius: 0.5rem;
+  initial-letter-align: white;
+  
+}
+
+
