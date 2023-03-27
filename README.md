@@ -1,4 +1,5 @@
 # e-comm-team-emma25-fe
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/atlp-rwanda/e-comm-team-emma25-fe/test.yml?style=flat-square)
 ## Testing
 By either writing or running the tests you have to follow these rules:
 
