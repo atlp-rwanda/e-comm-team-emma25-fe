@@ -7,5 +7,9 @@ export default {
         "@testing-library/jest-dom/extend-expect"
     ],
     testRegex: '(/tests/.*|(\\.|/)(test|spec))\\.tsx?$',
-    verbose: true
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+    coverageReporters: ['lcov', 'text'],
+    coverageDirectory: '../coverage',
+    collectCoverage: true,
+    verbose: true,
 }

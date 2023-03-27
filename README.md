@@ -1,5 +1,4 @@
 # e-comm-team-emma25-fe
-
 ## Testing
 By either writing or running the tests you have to follow these rules:
 
