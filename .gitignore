@@ -3,3 +3,6 @@ dist/
 .env
 .vscode/
 coverage/
+.parcel-cache/
+.env
+.DS_Store
