@@ -19,9 +19,11 @@
   "license": "ISC",
   "dependencies": {
     "@types/react-dom": "^18.0.11",
+    "@types/react-router-dom": "^5.3.3",
     "css-loader": "^6.7.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.9.0",
     "style-loader": "^3.3.2",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
