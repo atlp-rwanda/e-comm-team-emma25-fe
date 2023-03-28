@@ -18,9 +18,15 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: npm install
+      - name: Installing dependencies
         run: |
           npm install
-      - name: Test with Jest
+
+      - name: Test with Jest & Generate coverage information
         run: |
-          npm run test
+          npm run test:coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
