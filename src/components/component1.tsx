@@ -1,10 +1,10 @@
-import React from "react"
+import React from "react";
 
-const Hello = () =>{
-return(
+const Hello = () => {
+  return (
     <>
     <h2>Hello From CompOnents</h2>
     </>
-)
-}
-export default Hello
+  );
+};
+export default Hello;
