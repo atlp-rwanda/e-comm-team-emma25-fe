@@ -1,3 +1,5 @@
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/atlp-rwanda/e-comm-team-emma25-fe/test.yml?style=flat-square)
+
 
 # This is FrontEnd for E-Commerce 
 
