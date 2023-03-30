@@ -1,8 +1,15 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const TerserPlugin = require('terser-webpack-plugin');
 module.exports =[{
-  mode: 'development',
+  mode: 'production',
+  devtool: 'source-map',
+  optimization: {
+    minimizer: [new TerserPlugin({})],
+  },
+  performance: {
+    hints: false
+  },
   entry: './src/index.tsx',  
   output: {
     filename: 'bundle.js',
@@ -29,9 +36,9 @@ module.exports =[{
         },
       },
       {
-        test: /\.css$/,
+        test:  /\.css$/,
         exclude: /node_modules/,
-        use:['style-loader' ,"css-loader"],
+        use:['style-loader' ,"css-loader", "sass-loader"],
       },
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)?$/,
@@ -48,8 +55,10 @@ module.exports =[{
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
+    new TerserPlugin(),
   ],
   devServer: {
     historyApiFallback: true,
   },
+  stats: 'errors-only',
 }];

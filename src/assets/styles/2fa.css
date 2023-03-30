@@ -1,0 +1,86 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:100,100italic,300,300italic,regular,italic,700,700italic,900,900italic);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+}
+body {
+    background-color: #E5E5CB;
+    width: 100vw;
+}
+.setupContainer {
+    background-color: #fff;
+    padding: 2%;
+    width: 550px;
+    max-width: 90%;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.5);
+    border-radius: 30px;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.5s ease;
+}
+
+.setupContainer .top, .setupContainer .body-text {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.setupContainer .top img {
+    padding: 5px;
+}
+
+.body-text * {
+    margin-bottom: 10px;
+}
+
+.setupContainer form {
+    width: 60%;
+    text-align: center;
+}
+.setupContainer form >* {
+    font-size: 16px;
+}
+.setupContainer form input {
+    width: 100%;
+    padding: 0.5em 0.7em;
+    border-radius: 5px;
+    border: 2px solid #3C2A21;
+    margin-bottom: 5px;
+}
+.setupContainer form button {
+    margin: 20px 0;
+    padding: 0.7em 1.5em;
+    background-color: #E78120;
+    color: #fff;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.setupContainer form button:disabled {
+    cursor: not-allowed;
+    background-color: #7a5e34;
+}
+
+.setupContainer form button:active {
+    background-color: #bf7505;
+}
+.setupContainer form p.error {
+    text-align: left;
+    color: #f00;
+}
+
+/* KEY FRAMES */
+@media screen and (max-width: 992px) {
+    .setupContainer {
+        padding: 2%;
+        margin-top: 30%;
+    }
+    .setupContainer form {
+        width: 80%;
+    }
+}
