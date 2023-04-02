@@ -1,7 +1,7 @@
 import React from 'react';
 import "./assets/styles/style.css"
 import Hello from './components/component1';
-import './style.scss';
+import './assets/styles/style.css';
 function App() {
   return (
     <div>
@@ -11,10 +11,5 @@ function App() {
   );
 }
 
-class Apps  extends React.Component {
-  render() {
-    return <div>Hello World</div>;
-  }
-}
 
 export default App;
