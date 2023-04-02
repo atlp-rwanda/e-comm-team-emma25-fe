@@ -6,4 +6,4 @@ coverage/
 .parcel-cache/
 .env
 .DS_Store
-coverage/
+.coverage/
