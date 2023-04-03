@@ -1,4 +1,6 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/atlp-rwanda/e-comm-team-emma25-fe/test.yml?style=flat-square)
+[![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/e-comm-team-emma25-fe/badge.svg?branch=develop)](https://coveralls.io/github/atlp-rwanda/e-comm-team-emma25-fe?branch=develop)
+
 
 
 # This is FrontEnd for E-Commerce 
