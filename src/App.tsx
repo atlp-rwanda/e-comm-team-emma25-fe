@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
+        <Route path="/search/:keyword" Component={Home}/>
       </Routes>
        <div>
        <Hello />
