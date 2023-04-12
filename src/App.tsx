@@ -6,7 +6,7 @@ import Login from "./views/Login";
 import Setup2FA from "./views/setup2FA";
 import VerifyCode from "./views/VerifyCode";
 import Dashboard from "./views/sellers/Dashboard";
-
+import "./App.scss";
 function App() {
   return (
     <BrowserRouter>
