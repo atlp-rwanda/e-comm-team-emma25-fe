@@ -1,16 +1,24 @@
-import React from 'react'
-// import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import BottomNav from './BottomNav'
-import NavbarTop from './NavbarTop'
-
-export default function Navbar() {
-    // const theme = useTheme();    
-    const isSmallScreen =  useMediaQuery('(max-width:600px)');
-    console.log(isSmallScreen)
+import React from "react";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import BottomNav from "./BottomNav";
+import NavbarTop from "./NavbarTop";
+import SearchBar from "./SearchProduct";
+interface propstype {
+  iconNumber: number;
+}
+export default function Navbar(props: propstype) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <>     
-    {(isSmallScreen ? (<BottomNav/>) : (<NavbarTop/>))}
+    <>
+      {isSmallScreen ? (
+        <>
+          <SearchBar /> <BottomNav iconNumber={props.iconNumber} />{" "}
+        </>
+      ) : (
+        <NavbarTop />
+      )}
     </>
-  )
+  );
 }

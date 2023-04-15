@@ -1,43 +1,61 @@
-import React from 'react'
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ChatIcon from '@mui/icons-material/Chat';
-import SearchIcon from '@mui/icons-material/Search'
-import { Typography } from '@mui/material';
+import React from "react";
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import ChatIcon from "@mui/icons-material/Chat";
+import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
+interface propstype {
+  iconNumber: number;
+}
+function BottomNav(props: propstype) {
+  return (
+    <BottomNavigation
+      value={props.iconNumber - 1}
+      color="primary"
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        width: "100%",
+      }}
+    >
+      <BottomNavigationAction
+        label={<Typography variant="body1">Home</Typography>}
+        icon={<HomeIcon />}
+        component={Link}
+        to="/"
+      />
 
-
-function BottomNav() {
-  const [value, setValue] = React.useState(0);
-  return (    
-    <BottomNavigation       
-        value={value}
-        sx={{
-            display: "flex",
-            flexGrow: 1,
-            justifyContent: "space-around",
-            position: "fixed",
-            bottom: 0,
-            width: "100%",
-            padding: "16px",
-            height: '5%'
-    }}
-    
-        onChange={(event:any , newValue:any) => {
-          setValue(newValue);          
-        }}>
-        <BottomNavigationAction label={<Typography variant="body1" style={{ fontSize: "2rem" }}>Home</Typography>} icon={<HomeIcon  style={{ fontSize: "4rem" }} />}    />
-        <BottomNavigationAction label={<Typography variant="body1" style={{ fontSize: "2rem" }}>Chat</Typography>} icon={<ChatIcon style={{ fontSize: "4rem" }} />}  />
-        <BottomNavigationAction label={<Typography variant="body1" style={{ fontSize: "2rem" }}>Search</Typography>} icon={<SearchIcon style={{ fontSize: "4rem" }}/>}  />
-        <BottomNavigationAction label={<Typography variant="body1" style={{ fontSize: "2rem" }}>Notifications</Typography>} icon={<NotificationsIcon style={{ fontSize: "4rem" }}/>} />
-        <BottomNavigationAction label={<Typography variant="body1" style={{ fontSize: "2rem" }}>profile</Typography>} icon={<PersonIcon style={{ fontSize: "4rem" }}/>}  />
-      </BottomNavigation>
-      
-      
-  )
+      <BottomNavigationAction
+        label={<Typography variant="body1">Chat</Typography>}
+        icon={<ChatIcon />}
+        component={Link}
+        to="/chat"
+      />
+      <BottomNavigationAction
+        label={<Typography variant="body1">Cart</Typography>}
+        icon={<ShoppingCartIcon />}
+        component={Link}
+        to="/cart"
+      />
+      <BottomNavigationAction
+        label={<Typography variant="body1">Notifications</Typography>}
+        icon={<NotificationsIcon />}
+        component={Link}
+        to="/notifications"
+      />
+      <BottomNavigationAction
+        label={<Typography variant="body1">profile</Typography>}
+        icon={<PersonIcon />}
+        component={Link}
+        to="/profile"
+      />
+    </BottomNavigation>
+  );
 }
 
-export default BottomNav
+export default BottomNav;
