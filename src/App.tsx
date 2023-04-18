@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./assets/styles/style.css";
 import Home from "./views/Home";
-import ToggleButton from "./components/ToggleButton";
-import Hello from "./components/component1";
+// import ToggleButton from "./components/ToggleButton";
+// import Hello from "./components/component1";
 
 import "./assets/styles/style.css";
 import Login from "./views/Login";
@@ -22,6 +22,10 @@ import Cart from "./views/cart";
 import Results from "./views/Results";
 import CheckoutFailed from "./views/Checkout/CheckoutFailed";
 import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
+import AddProducts from "./views/sellers/AddProduct";
+import Products from "./views/sellers/Products";
+import EditProduct from "./views/sellers/EditProduct";
+
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +35,9 @@ function App() {
         <Route path="/two-fa-setup" element={<Setup2FA />} />
         <Route path="/verify-code" element={<VerifyCode />} />
         <Route path="/seller-home" element={<Dashboard />} />
+        <Route path="/seller-products" element={<Products />} />
+        <Route path="/add-product" element={<AddProducts />} />
+        <Route path="/edit-product" element={<EditProduct />} />
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/notifications" element={<UserNotifications />} />
@@ -40,11 +47,6 @@ function App() {
         <Route path="/cancel" element={<CheckoutFailed />} />
         <Route path="/success" element={<CheckoutSuccess />} />
       </Routes>
-      <div>
-        <Hello />
-        <h1>FRONT-END</h1>
-        <ToggleButton />
-      </div>
     </BrowserRouter>
   );
 }
