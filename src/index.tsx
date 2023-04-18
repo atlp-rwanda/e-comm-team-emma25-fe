@@ -1,6 +1,8 @@
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import Theme from "./themes/theme";
 
 const RootEl = document.querySelector("#root");
 if (!RootEl) {
@@ -9,6 +11,8 @@ if (!RootEl) {
 const root = createRoot(RootEl);
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={Theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
