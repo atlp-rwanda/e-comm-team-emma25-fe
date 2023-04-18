@@ -1,0 +1,17 @@
+.search_button{
+    border-radius: 0 20px 20px 0;
+    height: 32px;
+    border: none;
+    padding: 5px;
+     width : 75px;
+     background-color: #1F273E;
+     color: white;
+     cursor: pointer;
+}
+.textdiv{
+    width: 100%
+}
+ .linkers{
+    text-decoration: none;
+    color: #1F273E;
+ }
