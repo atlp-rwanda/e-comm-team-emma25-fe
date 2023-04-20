@@ -64,7 +64,7 @@ const Products = () => {
   return (
     <>
       <CssBaseline />
-      <Box sx={{ display: "flex", background: 'none'}}>
+      <Box sx={{ display: "flex"}}>
         {/* <Navigation /> */}
         <Box component="main" sx={{ flexGrow: 1, pt: 10, pl: 2 }}>
           <Button

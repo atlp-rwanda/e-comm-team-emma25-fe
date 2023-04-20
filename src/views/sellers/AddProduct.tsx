@@ -92,7 +92,7 @@ const AddProducts = () => {
           <Button
             variant="outlined"
             component={Link}
-            to="/seller-products"
+            to="/seller-home"
             color="info"
             startIcon={<ChevronLeft />}
           >
