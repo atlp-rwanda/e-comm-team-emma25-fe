@@ -7,6 +7,8 @@ import Setup2FA from "./views/setup2FA";
 import VerifyCode from "./views/VerifyCode";
 import Dashboard from "./views/sellers/Dashboard";
 import "./App.scss";
+import Profile from "./views/sellers/Profile";
+import AddProducts from "./views/sellers/AddProduct";
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +18,8 @@ function App() {
         <Route path="/two-fa-setup" element={<Setup2FA />} />
         <Route path="/verify-code" element={<VerifyCode />} />
         <Route path="/seller-home" element={<Dashboard />} />
+        <Route path="/add-product" element={<AddProducts />} />
+        <Route path="/seller-profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
