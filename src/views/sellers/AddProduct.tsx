@@ -15,7 +15,6 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import Navigation from "../../components/Navigation";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AddAPhotoOutlined,
@@ -42,33 +41,32 @@ const AddProducts = () => {
     setAction(true);
     toast.loading("Saving the product information");
 
-    formData.append("pname", data.pname);
-    formData.append("p_price", data.p_price);
-    formData.append("quantity", data.quantity);
-    formData.append("desc", data.desc);
+    formData.append("pname", data.pname as string);
+    formData.append("p_price", data.p_price as string);
+    formData.append("quantity", data.quantity as string);
+    formData.append("desc", data.desc as string);
     for (let i = 0; i < data.imgs.length; i++) {
       const file = data.imgs[i];
       formData.append("imgs", file);
     }
+
     AxiosClient.post("/products/add", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcyNCwiZW1haWwiOiJ0cmVzb3IudGVzdEBnbWFpbC5jb20iLCJyb2xlIjoic2VsbGVyIiwicGhvbmVOdW1iZXIiOiIrMjUwNzgzMDA2OTAyIiwibmFtZSI6IlRyZXNvciBBbGFpbiJ9._BC1vbaXZ0hBtaDLzzwqszVuEpyldzAHMd82zv64zA8",
       },
     })
       .then((response) => {
-        console.log(response);
         toast.remove();
-        toast.success(response.data.message, { duration: 5000 });
+        toast.success(response.data.message as string, { duration: 5000 });
         setTimeout(() => {
-          navigate("/seller-products");
+          navigate("/seller-home");
         }, 4000);
       })
       .catch((error) => {
-        console.error(error);
         toast.remove();
-        toast.error(error?.response.data.message, { duration: 10000 });
+        toast.error(error?.response.data.message as string, {
+          duration: 10000,
+        });
       })
       .finally(() => {
         setAction(false);
@@ -86,12 +84,11 @@ const AddProducts = () => {
     <>
       <CssBaseline />
       <Box sx={{ display: "flex" }}>
-        <Navigation />
         <Box component="main" sx={{ flexGrow: 1, pt: 10, pl: 2 }}>
           <Button
             variant="outlined"
             component={Link}
-            to="/seller-products"
+            to="/seller-home"
             color="info"
             startIcon={<ChevronLeft />}
           >

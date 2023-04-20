@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import React, { useState } from "react";
 import { Product } from "../../interfaces/Product";
 import {
   Box,
@@ -11,8 +12,16 @@ import {
   CardMedia,
   CardContent,
   Typography,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
+  DialogTitle,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
-import Navigation from "../../components/Navigation";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { Link, useNavigate } from "react-router-dom";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -28,7 +37,33 @@ interface ApiResponse {
 
 const Products = () => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [preview, setPreview] = useState<Product>({
+    ProductID: "",
+    ProductName: "",
+    ProductPrice: 0,
+    quantity: 0,
+    available: true,
+    ProductDesc: "",
+    ProductOwner: "",
+    createdAt: "",
+    updatedAt: "",
+    pro_images: [
+      {
+        ImageID: "",
+        ImagePath: "",
+        ImageType: "",
+        ProductID: "",
+        createdAt: "",
+        updatedAt: "",
+      },
+    ],
+  });
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   document.title = "Products Management || !SHOP";
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [products, setProducts] = useState<ApiResponse>({
     status: 0,
     message: "",
@@ -41,32 +76,25 @@ const Products = () => {
     setIsDeleting(false);
   };
   const [fetching, setFetching] = useState(true);
-  useEffect(() => {
-    AxiosClient.get("/products/allSellerCollection", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcyNCwiZW1haWwiOiJ0cmVzb3IudGVzdEBnbWFpbC5jb20iLCJyb2xlIjoic2VsbGVyIiwicGhvbmVOdW1iZXIiOiIrMjUwNzgzMDA2OTAyIiwibmFtZSI6IlRyZXNvciBBbGFpbiJ9._BC1vbaXZ0hBtaDLzzwqszVuEpyldzAHMd82zv64zA8",
-      },
+  AxiosClient.get("/products/allSellerCollection")
+    .then((response) => {
+      if (response.data.status == 200) {
+        setProducts(response.data as ApiResponse);
+      }
     })
-      .then((response) => {
-        if (response.data.status == 200) {
-          setProducts(response.data as ApiResponse);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => setFetching(false));
-  }, []);
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => setFetching(false));
 
-  const handlePreviewClick = (indx: number) => {
-    console.log(indx);
+  const handlePreviewClick = (prev: Product) => {
+    setPreview(prev);
+    handleOpen();
   };
   return (
     <>
       <CssBaseline />
       <Box sx={{ display: "flex" }}>
-        <Navigation />
         <Box component="main" sx={{ flexGrow: 1, pt: 10, pl: 2 }}>
           <Button
             variant="contained"
@@ -107,14 +135,10 @@ const Products = () => {
                         >
                           <CardMedia
                             component="img"
-                            onClick={() => handlePreviewClick(indx)}
+                            onClick={() => handlePreviewClick(product)}
                             alt={product.ProductName}
                             sx={{ height: "250px", objectFit: "cover" }}
-                            image={
-                              product.pro_images.length != 0
-                                ? product.pro_images[0].ImagePath
-                                : "https://res.cloudinary.com/dut4cl45k/image/upload/v1681924031/pngwing.com_g7uobw.png"
-                            }
+                            image={product.pro_images[0].ImagePath}
                           />
                           <CardContent>
                             <Typography
@@ -177,6 +201,59 @@ const Products = () => {
                   })
                 : "No Products Found"}
             </Grid>
+            <Dialog
+              fullScreen={fullScreen}
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="product-modal-title"
+            >
+              <Box>
+                <DialogTitle id="product-modal-title-success">
+                  {preview?.ProductName}
+                </DialogTitle>
+                <DialogContent>
+                  <img
+                    src={preview?.pro_images[0].ImagePath}
+                    alt={preview?.ProductName}
+                    style={{
+                      width: "100%",
+                      objectFit: "cover",
+                      objectPosition: "center",
+                      borderRadius: "10px",
+                    }}
+                  />
+                  <Typography
+                    variant="h4"
+                    style={{ fontWeight: "bold" }}
+                    gutterBottom
+                  >
+                    RWF {preview?.ProductPrice}
+                  </Typography>
+                  <DialogContentText mb={2}>
+                    {preview?.ProductName} <br />
+                    <Typography paragraph>{preview?.ProductDesc}</Typography>
+                  </DialogContentText>
+                  <ImageList variant="quilted" cols={4} rowHeight={150}>
+                    {preview.pro_images.map((image, i) => (
+                      <ImageListItem key={i}>
+                        <img
+                          style={{ borderRadius: "5px" }}
+                          src={image.ImagePath}
+                          alt={preview?.ProductName}
+                          id={image.ImageID}
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </DialogContent>
+                <DialogActions>
+                  <Button variant="outlined" onClick={handleClose}>
+                    Close
+                  </Button>
+                </DialogActions>
+              </Box>
+            </Dialog>
           </Container>
         </Box>
       </Box>

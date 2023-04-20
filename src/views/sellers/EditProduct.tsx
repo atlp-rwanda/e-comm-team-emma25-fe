@@ -18,7 +18,6 @@ import {
   ImageListItemBar,
   ImageListItem,
 } from "@mui/material";
-import Navigation from "../../components/Navigation";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   AddAPhotoOutlined,
@@ -39,19 +38,13 @@ const EditProduct = () => {
 
   const navigate = useNavigate();
   const deleteImg = (imgId: string) => {
-    AxiosClient.delete(`/products/delete/image/${imgId}`, {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcyNCwiZW1haWwiOiJ0cmVzb3IudGVzdEBnbWFpbC5jb20iLCJyb2xlIjoic2VsbGVyIiwicGhvbmVOdW1iZXIiOiIrMjUwNzgzMDA2OTAyIiwibmFtZSI6IlRyZXNvciBBbGFpbiJ9._BC1vbaXZ0hBtaDLzzwqszVuEpyldzAHMd82zv64zA8",
-      },
-    })
+    AxiosClient.delete(`/products/delete/image/${imgId}`)
       .then((res) => {
         console.log(res.data);
         if (res.data.status == 200) {
           pro_images = pro_images.filter((image) => image.ImageID != imgId);
           setImages(pro_images);
-          toast.success("Deleteddddd");
-          console.log(pro_images);
+          toast.success("Image Deleted");
         }
       })
       .catch((error) => {
@@ -87,18 +80,18 @@ const EditProduct = () => {
     AxiosClient.patch(`/products/update/${product.ProductID}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcyNCwiZW1haWwiOiJ0cmVzb3IudGVzdEBnbWFpbC5jb20iLCJyb2xlIjoic2VsbGVyIiwicGhvbmVOdW1iZXIiOiIrMjUwNzgzMDA2OTAyIiwibmFtZSI6IlRyZXNvciBBbGFpbiJ9._BC1vbaXZ0hBtaDLzzwqszVuEpyldzAHMd82zv64zA8",
       },
     })
       .then((response) => {
         toast.remove();
         toast.success(response.data.message as string, { duration: 5000 });
+        console.log(response);
         setTimeout(() => {
-          navigate("/seller-products");
+          navigate("/seller-home");
         }, 4000);
       })
       .catch((error) => {
+        console.log(error);
         toast.remove();
         toast.error(error?.response.data.message as string, {
           duration: 10000,
@@ -120,12 +113,11 @@ const EditProduct = () => {
     <>
       <CssBaseline />
       <Box sx={{ display: "flex" }}>
-        <Navigation />
         <Box component="main" sx={{ flexGrow: 1, pt: 10, pl: 2 }}>
           <Button
             variant="outlined"
             component={Link}
-            to="/seller-products"
+            to="/seller-home"
             color="info"
             startIcon={<ChevronLeft />}
           >
