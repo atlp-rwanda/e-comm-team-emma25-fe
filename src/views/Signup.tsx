@@ -1,31 +1,74 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import Theme from "../themes/theme";
+import { AxiosClient } from "../utils/AxiosClient";
+import { Navigate } from "react-router-dom";
 
 const theme = Theme;
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  type User = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone_number: string;
+    password: string;
   };
 
+  const [formData, setFormData] = useState<User>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone_number: "",
+    password: "",
+  });
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formData);
+    AxiosClient.post("/signup", formData)
+      .then((response) => {
+        // Handle successful response
+        alert("successfully registered");
+        console.log(response);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone_number: "",
+          password: "",
+        });
+        <Navigate to="/login" />;
+      })
+      .catch((error) => {
+        if (error.response.data.error) {
+          // that falls out of the range of 2xx
+          console.log(error);
+          alert(error.response.data.error);
+        } else if (error.response.data.message) {
+          // user exist
+          console.log(error);
+          alert(error.response.data.message);
+        } else {
+          console.log(error);
+          alert("Sorry Try Again");
+        }
+      });
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -38,10 +81,8 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography variant="h6">!shop</Typography>
+          <Typography component="h1" variant="h4" color="primary">
             Sign up
           </Typography>
           <Box
@@ -53,6 +94,8 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  value={formData.firstName}
+                  onChange={handleInput}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -63,6 +106,8 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  value={formData.lastName}
+                  onChange={handleInput}
                   required
                   fullWidth
                   id="lastName"
@@ -73,6 +118,8 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  value={formData.email}
+                  onChange={handleInput}
                   required
                   fullWidth
                   id="email"
@@ -83,6 +130,20 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  value={formData.phone_number}
+                  onChange={handleInput}
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone Number (eg: 250780....)"
+                  name="phone_number"
+                  autoComplete="phone"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  value={formData.password}
+                  onChange={handleInput}
                   required
                   fullWidth
                   name="password"
@@ -90,14 +151,6 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
