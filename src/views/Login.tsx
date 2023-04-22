@@ -153,3 +153,5 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+
+export default Login;
