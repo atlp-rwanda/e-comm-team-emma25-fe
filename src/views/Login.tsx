@@ -153,5 +153,8 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+<<<<<<< HEAD
 
 export default Login;
+=======
+>>>>>>> 8571e1d (initial commit)
