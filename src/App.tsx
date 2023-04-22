@@ -9,7 +9,6 @@ import Setup2FA from "./views/setup2FA";
 import VerifyCode from "./views/VerifyCode";
 import Dashboard from "./views/sellers/Dashboard";
 import "./App.scss";
-import SellerProfile from "./views/sellers/SellerProfile";
 import AddProducts from "./views/sellers/AddProduct";
 import "./assets/styles/style.css";
 import Chat from "./views/Chat";
@@ -20,7 +19,7 @@ import Results from "./views/Results";
 import CheckoutFailed from "./views/Checkout/CheckoutFailed";
 import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
 import EditSellerProfile from "./views/sellers/EditSellerProfile";
-// import SignIn from "./views/Login";
+import SellerProfile from "./views/sellers/SellerProfile";
 function App() {
   return (
     <BrowserRouter>
