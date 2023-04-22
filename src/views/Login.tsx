@@ -1,57 +1,74 @@
-import * as React from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable  @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-misused-promises*/
+
+import * as React from "react";
 // import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { ThemeProvider } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import Theme from '../themes/theme';
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { ThemeProvider } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+import Theme from "../themes/theme";
 // import { FormEvent } from 'react';
 import { AxiosClient } from "../utils/AxiosClient";
 import { useNavigate } from "react-router-dom";
-import { useForm } from 'react-hook-form';
-import toast, { Toaster } from "react-hot-toast"
-import axios from "axios"
+import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 const theme = Theme;
 
 export default function SignIn() {
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [loading, setLoading] = React.useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
-    toast.loading("Please wait ....")
-    setLoading(true)
+    toast.loading("Please wait ....");
+    setLoading(true);
     AxiosClient.post("/login", {
       email: data.email,
-      password: data.password
-    }).then(response => {
-      toast.remove()
-      toast.success(response.data.message)
-      const token = response.data.token;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      if (response.data.role == "seller") {
-        navigate("/seller-home");
-      } else if (response.data.role == "user" || response.data.role == "buyer") {
-        navigate("/")
-      } else {
-        navigate("/admin-dashboard")
-      }
-    }).catch(error => {
-      toast.remove()
-      setLoading(false);
-      console.log(error)
-      toast.error(error.response.data.message)
+      password: data.password,
     })
-  })
+      .then((response) => {
+        toast.remove();
+        toast.success(response.data.message);
+        const token = response.data.token;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        document.cookie = `token=${token}`;
+        if (response.data.role == "seller") {
+          navigate("/seller-home");
+        } else if (
+          response.data.role == "user" ||
+          response.data.role == "buyer"
+        ) {
+          navigate("/");
+        } else {
+          navigate("/admin-dashboard");
+        }
+      })
+      .catch((error) => {
+        toast.remove();
+        setLoading(false);
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  });
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -59,11 +76,11 @@ export default function SignIn() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            '& > :not(style)': {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            flexWrap: "wrap",
+            "& > :not(style)": {
               m: 1,
               paddingTop: 6,
               paddingLeft: 5,
@@ -71,11 +88,11 @@ export default function SignIn() {
             },
           }}
         >
-          <Paper elevation={3}
-
+          <Paper
+            elevation={3}
             sx={{
               p: 4,
-              margin: '50px auto',
+              margin: "50px auto",
               maxWidth: 450,
               flexGrow: 1,
             }}
