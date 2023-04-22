@@ -19,7 +19,6 @@ import Cart from "./views/cart";
 import Results from "./views/Results";
 import CheckoutFailed from "./views/Checkout/CheckoutFailed";
 import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
-// import SignIn from "./views/Login";
 function App() {
   return (
     <BrowserRouter>
@@ -40,8 +39,11 @@ function App() {
         <Route path="/cancel" element={<CheckoutFailed />} />
         <Route path="/success" element={<CheckoutSuccess />} />
       </Routes>
+<<<<<<< HEAD
       {/* <Login/> */}
       {/* <SignIn/> */}
+=======
+>>>>>>> 524da50 (feat: add chat)
     </BrowserRouter>
   );
 }

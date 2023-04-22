@@ -1,0 +1,9 @@
+.messageOwner{
+    font-size: small;
+
+}
+.messageDiv{
+    border-radius: 20px;
+    width : fit-content;
+    width: 100%;   
+}
