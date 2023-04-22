@@ -42,7 +42,7 @@ const Products = () => {
   }
   const [fetching, setFetching] = useState(true);
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzE1LCJlbWFpbCI6InNlbGxlckBnbWFpbC5jb20iLCJuYW1lIjoiU2VsbGVyIFRvU2VsbCIsInBob25lIjpudWxsLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgxOTQ3NzA1LCJleHAiOjE2ODI1NTI1MDV9.76xioS964YQ-ChUEqYIGsN1T9rO8cP3MUvvI6OHaXnE";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzE1LCJlbWFpbCI6InNlbGxlckBnbWFpbC5jb20iLCJuYW1lIjoiU2VsbGVyIFRvU2VsbCIsInBob25lIjpudWxsLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgyMTMwMDk3LCJleHAiOjE2ODI3MzQ4OTd9.S8HtMX50n6Qmgy5N_iq4dXrdOUgBDe7wZKLzuWED72g";
   AxiosClient.get("/products/allSellerCollection", {
     headers: {
       Authorization: `Bearer ${token}`

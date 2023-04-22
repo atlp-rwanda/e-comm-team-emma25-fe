@@ -16,7 +16,7 @@ export interface Product {
       createdAt: string;
       updatedAt: string;
     }[];
-  }
+}
 
 export interface FormValues {
   pname: string;
