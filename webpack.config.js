@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const dotenv = require('dotenv-webpack');
 module.exports =[{
   mode: 'production',
   devtool: 'source-map',
@@ -14,7 +15,7 @@ module.exports =[{
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-  },
+  },  
   resolve:{
     extensions: [".js",".ts",".tsx", ".jsx"] 
   },
@@ -50,8 +51,7 @@ module.exports =[{
         },
       },
       {
-        test:  /\.css$/,
-        exclude: /node_modules/,
+        test:  /\.css$/,        
         use:['style-loader' ,"css-loader", "sass-loader"],
       },
       {
@@ -68,6 +68,9 @@ module.exports =[{
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+    }),
+    new dotenv({
+      path: path.resolve(__dirname, `./.env`),
     }),
     new TerserPlugin(),
   ],
