@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const AxiosClient = axios.create({
-  baseURL: "https://e-comm-team-emma25-bn.onrender.com",
+  baseURL: process.env.BACKEND_LINK as string,
   withCredentials: true,
 });
