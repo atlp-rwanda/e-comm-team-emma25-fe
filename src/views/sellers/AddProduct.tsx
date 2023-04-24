@@ -15,6 +15,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
+// import Navigation from "../../components/Navigation";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AddAPhotoOutlined,
@@ -49,10 +50,12 @@ const AddProducts = () => {
       const file = data.imgs[i];
       formData.append("imgs", file);
     }
-
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzE1LCJlbWFpbCI6InNlbGxlckBnbWFpbC5jb20iLCJuYW1lIjoiU2VsbGVyIFRvU2VsbCIsInBob25lIjpudWxsLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgxOTQ3NzA1LCJleHAiOjE2ODI1NTI1MDV9.76xioS964YQ-ChUEqYIGsN1T9rO8cP3MUvvI6OHaXnE";
     AxiosClient.post("/products/add", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -84,6 +87,7 @@ const AddProducts = () => {
     <>
       <CssBaseline />
       <Box sx={{ display: "flex" }}>
+        {/* <Navigation /> */}
         <Box component="main" sx={{ flexGrow: 1, pt: 10, pl: 2 }}>
           <Button
             variant="outlined"
