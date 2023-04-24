@@ -41,8 +41,6 @@ function App() {
         <Route path="/cancel" element={<CheckoutFailed />} />
         <Route path="/success" element={<CheckoutSuccess />} />
       </Routes>
-      {/* <Login/> */}
-      {/* <SignIn/> */}
     </BrowserRouter>
   );
 }
