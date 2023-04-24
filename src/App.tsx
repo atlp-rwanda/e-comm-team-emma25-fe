@@ -39,11 +39,6 @@ function App() {
         <Route path="/cancel" element={<CheckoutFailed />} />
         <Route path="/success" element={<CheckoutSuccess />} />
       </Routes>
-<<<<<<< HEAD
-      {/* <Login/> */}
-      {/* <SignIn/> */}
-=======
->>>>>>> 524da50 (feat: add chat)
     </BrowserRouter>
   );
 }

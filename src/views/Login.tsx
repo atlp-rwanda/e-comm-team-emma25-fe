@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import Cookies from "js-cookie";
 const theme = Theme;
 
 export default function SignIn() {
@@ -50,7 +51,8 @@ export default function SignIn() {
         toast.success(response.data.message);
         const token = response.data.token;
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        document.cookie = `token=${token}`;
+        // document.cookie = `token=${token}`;
+        Cookies.set("token", token as string);
         if (response.data.role == "seller") {
           navigate("/seller-home");
         } else if (
