@@ -23,6 +23,8 @@ import ChangePassword from "./views/changepassword";
 import ResetPassword from "./views/resetpasswordEmail";
 // import ResetPassword from "./views/resetpasswordEmail";
 // import SignIn from "./views/Login";
+import EditProduct from "./views/sellers/EditProduct";
+
 function App() {
   return (
     <BrowserRouter>
@@ -34,6 +36,7 @@ function App() {
         <Route path="/verify-code" element={<VerifyCode />} />
         <Route path="/seller-home" element={<Dashboard />} />
         <Route path="/add-product" element={<AddProducts />} />
+        <Route path="/edit-product" element={<EditProduct />} />
         <Route path="/seller-profile" element={<SellerProfile />} />
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/chat" element={<Chat />} />

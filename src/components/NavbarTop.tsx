@@ -36,7 +36,7 @@ function NavbarTop() {
         <StyledToolbar>
           <Typography variant="h6">
             <Link to="/" className="linkers">
-              !shop
+              !SHOP
             </Link>
           </Typography>
           <SearchBar />
