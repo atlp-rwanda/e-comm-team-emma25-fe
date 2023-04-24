@@ -19,6 +19,10 @@ import Cart from "./views/cart";
 import Results from "./views/Results";
 import CheckoutFailed from "./views/Checkout/CheckoutFailed";
 import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
+import ChangePassword from "./views/changepassword";
+import ResetPassword from "./views/resetpasswordEmail";
+// import ResetPassword from "./views/resetpasswordEmail";
+// import SignIn from "./views/Login";
 import EditProduct from "./views/sellers/EditProduct";
 
 function App() {
@@ -41,6 +45,8 @@ function App() {
         <Route path="/result" element={<Results />} />
         <Route path="/cancel" element={<CheckoutFailed />} />
         <Route path="/success" element={<CheckoutSuccess />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
       </Routes>
     </BrowserRouter>
   );
