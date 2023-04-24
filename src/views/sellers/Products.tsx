@@ -19,6 +19,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Delete from "@mui/icons-material/DeleteForever";
 import { AxiosClient } from "../../utils/AxiosClient";
 import CircularProgress from "@mui/material/CircularProgress";
+import cookies from "js-cookie"
 
 interface ApiResponse {
   status: number;
@@ -41,8 +42,7 @@ const Products = () => {
     setIsDeleting(false);
   };
   const [fetching, setFetching] = useState(true);
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzE1LCJlbWFpbCI6InNlbGxlckBnbWFpbC5jb20iLCJuYW1lIjoiU2VsbGVyIFRvU2VsbCIsInBob25lIjpudWxsLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgyMTMwMDk3LCJleHAiOjE2ODI3MzQ4OTd9.S8HtMX50n6Qmgy5N_iq4dXrdOUgBDe7wZKLzuWED72g";
+const token = cookies.get("token");
   AxiosClient.get("/products/allSellerCollection", {
     headers: {
       Authorization: `Bearer ${token}`,
