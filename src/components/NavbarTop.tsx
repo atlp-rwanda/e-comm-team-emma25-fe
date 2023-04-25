@@ -82,7 +82,7 @@ function NavbarTop() {
                 </Badge>
               </IconButton>
             </Tooltip>
-            <IconButton aria-label="chat" component={Link} to="/chat">
+            <IconButton aria-label="chat" href="/chat">
               <Badge badgeContent={0} color="error">
                 <ChatIcon color="primary" />
               </Badge>
