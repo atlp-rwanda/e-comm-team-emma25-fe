@@ -60,8 +60,10 @@ export default function SignIn() {
           response.data.role == "buyer"
         ) {
           navigate("/");
-        } else {
+        } else if (response.data.role == "admin") {
           navigate("/admin-dashboard");
+        } else {
+          navigate("/");
         }
       })
       .catch((error) => {
@@ -155,8 +157,3 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
-<<<<<<< HEAD
-
-export default Login;
-=======
->>>>>>> 8571e1d (initial commit)

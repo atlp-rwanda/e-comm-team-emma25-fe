@@ -25,6 +25,8 @@ import ResetPassword from "./views/resetpasswordEmail";
 // import ResetPassword from "./views/resetpasswordEmail";
 // import SignIn from "./views/Login";
 import EditProduct from "./views/sellers/EditProduct";
+import AdminDashboard from "./views/Admin/AdminDashboard";
+
 function App() {
   return (
     <BrowserRouter>
@@ -32,6 +34,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/two-fa-setup" element={<Setup2FA />} />
         <Route path="/verify-code" element={<VerifyCode />} />
         <Route path="/seller-home" element={<Dashboard />} />

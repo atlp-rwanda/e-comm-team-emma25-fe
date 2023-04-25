@@ -30,6 +30,10 @@ function NavbarTop() {
     return gettoken;
   }
   const token = getCookie("token");
+  const handleLogout = () => {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    window.location.href = "/";
+  };
   return (
     <div>
       <AppBar position="sticky" color="secondary">
@@ -66,7 +70,12 @@ function NavbarTop() {
               <Avatar />
             </Link>
             {token ? (
-              <Button size="small" variant="text" color="primary">
+              <Button
+                size="small"
+                variant="text"
+                color="primary"
+                onClick={handleLogout}
+              >
                 Logout
               </Button>
             ) : (

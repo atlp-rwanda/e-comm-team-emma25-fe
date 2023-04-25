@@ -28,7 +28,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Delete from "@mui/icons-material/DeleteForever";
 import { AxiosClient } from "../../utils/AxiosClient";
 import CircularProgress from "@mui/material/CircularProgress";
-import cookies from "js-cookie"
+import cookies from "js-cookie";
 
 interface ApiResponse {
   status: number;
@@ -77,9 +77,10 @@ const Products = () => {
     setIsDeleting(false);
   };
   const [fetching, setFetching] = useState(true);
-const token = cookies.get("token");
+  const token = cookies.get("token");
   AxiosClient.get("/products/allSellerCollection", {
     headers: {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       Authorization: `Bearer ${token}`,
     },
   })

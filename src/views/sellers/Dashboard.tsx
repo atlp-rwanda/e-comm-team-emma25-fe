@@ -12,7 +12,7 @@ import {
 import DrawerComp from "../../components/DrawerComp";
 import Products from "./Products";
 import Profile from "./SellerProfile";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PAGES = ["Products", "Orders", "Profile"];
 
@@ -27,7 +27,8 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    // code to handle logout
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    window.location.href = "/";
   };
 
   return (
@@ -35,7 +36,9 @@ const Dashboard = () => {
       <AppBar color="primary">
         <Toolbar>
           <Typography sx={{ fontSize: "1.5rem", paddingLeft: "2px" }}>
-            !SHOP
+            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+              !SHOP
+            </Link>
           </Typography>
           {isMatch ? (
             <>
@@ -55,7 +58,7 @@ const Dashboard = () => {
                 ))}
               </Tabs>
               <Button
-                sx={{ marginLeft: "auto", backgroundColor: "#1A120B" }}
+                sx={{ marginLeft: "auto", color: "primary" }}
                 variant="contained"
                 onClick={handleLogout}
               >

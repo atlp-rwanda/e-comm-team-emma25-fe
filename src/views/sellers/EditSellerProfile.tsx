@@ -19,6 +19,7 @@ import {
   Container,
   TextField,
   InputAdornment,
+  MenuItem,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { ChevronLeft, Save } from "@mui/icons-material";
@@ -55,16 +56,16 @@ const EditSellerProfile = () => {
         gender: sellerData.gender,
         birthdate: sellerData.birthdate,
         language: sellerData.language,
-        streetAddress: sellerData.streetAddress,
-        city: sellerData.city,
-        stateOrProvince: sellerData.stateOrProvince,
-        zipOrPostalCode: sellerData.zipOrPostalCode,
-        country: sellerData.country,
-        billingStreetAddress: sellerData.streetAddress,
-        billingCity: sellerData.city,
-        billingStateOrProvince: sellerData.stateOrProvince,
-        billingZipOrPostalCode: sellerData.zipOrPostalCode,
-        billingCountry: sellerData.country,
+        streetAddress: sellerData.Address.streetAddress,
+        city: sellerData.Address.city,
+        stateOrProvince: sellerData.Address.stateOrProvince,
+        zipOrPostalCode: sellerData.Address.zipOrPostalCode,
+        country: sellerData.Address.country,
+        billingStreetAddress: sellerData.billingAddress.streetAddress,
+        billingCity: sellerData.billingAddress.city,
+        billingStateOrProvince: sellerData.billingAddress.stateOrProvince,
+        billingZipOrPostalCode: sellerData.billingAddress.zipOrPostalCode,
+        billingCountry: sellerData.billingAddress.country,
       };
       setInitialValues(initialValues);
       setValue("firstName", initialValues.firstName);
@@ -237,7 +238,11 @@ const EditSellerProfile = () => {
                     error={!!errors.gender}
                     helperText={errors.gender ? "Gender is required" : ""}
                     disabled={inAction}
-                  />
+                    select
+                  >
+                    <MenuItem value="male">Male</MenuItem>
+                    <MenuItem value="female">Female</MenuItem>
+                  </TextField>
                   <TextField
                     fullWidth
                     label="Birthdate"

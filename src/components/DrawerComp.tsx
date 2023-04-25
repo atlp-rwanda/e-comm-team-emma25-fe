@@ -19,11 +19,15 @@ const PAGES = ["Products", "Orders", "Profile", "LOGOUT"];
 const DrawerComp = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
+  const handleLogout = () => {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    window.location.href = "/login";
+  };
 
   const handlePageClick = (page) => {
     setOpenDrawer(false);
     if (page === "LOGOUT") {
-      // Perform logout action
+      handleLogout();
     } else if (page === "Profile") {
       navigate("/seller-profile");
     } else {
