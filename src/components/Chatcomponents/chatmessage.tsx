@@ -11,7 +11,6 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import Cookies from "js-cookie";
-
 interface Message {
   sender: string;
   message: string;
@@ -43,6 +42,7 @@ const Chatscreen: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(true)
   const [userData, setUserData] = useState<user>({
     id: null,
     role: "",
@@ -82,6 +82,8 @@ const Chatscreen: React.FC = () => {
       chats.forEach((chat: Message[]) => {
         displayMessage(chat[0].sender, chat[0].message);
       });
+      setLoading(false)
+      console.log(loading)
       handleScroll;
     });
     socket?.on("bye", (data: chatMessage) => {
@@ -135,16 +137,14 @@ const Chatscreen: React.FC = () => {
           <ArrowCircleDownIcon />
         </IconButton>
         <div className="title">
-          <h2>Chats</h2>
-        </div>
-        <div className="messages" ref={MessageDiv}>
-          {messages ? (
-            <></>
-          ) : (
-            <Box sx={{ display: "flex", alginItems: "center" }}>
-              <CircularProgress color="primary" size="large" />
-            </Box>
-          )}
+          <h2>Chats</h2>       
+        </div>          
+        <div className="messages" ref={MessageDiv}>       
+        {loading ? (<Box sx={{width: '100%' ,height: '100%',left: 'unset',display:'flex',  alignItems: 'center'}}>
+          <Box sx={{width: "100%", display: 'flex', alignItems: 'center' }}>       
+        <CircularProgress color="primary" sx={{zIndex:'100',margin: 'auto'}}/>        
+        </Box>
+          </Box>   ):(<></>) }
           {messages.map(({ sender, message }, index) => (
             <div
               className={`message ${sender === userData.name ? "mine" : ""}`}

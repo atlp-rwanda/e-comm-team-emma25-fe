@@ -8,6 +8,7 @@
      padding: 0;
      width: 50%; 
      background-color: #FFFFFF;    
+     overflow: hidden;
 }
 .textdiv{
     width: 100%

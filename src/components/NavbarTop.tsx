@@ -16,20 +16,24 @@ import Typography from "@mui/material/Typography";
 import "../assets/styles/navbar.css";
 import Cookies from "js-cookie";
 import SearchBar from "./SearchProduct";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
 });
 
 function NavbarTop() {
+  const navigate = useNavigate()
   function getCookie(name: string): string | undefined {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     const gettoken: string | undefined = Cookies.get(name);
     return gettoken;
   }
   const token = getCookie("token");
+  function Logout(){
+    Cookies.remove('token')
+    navigate('/login')
+    }
   return (
     <div>
       <AppBar position="sticky" color="secondary">
@@ -66,7 +70,7 @@ function NavbarTop() {
               <Avatar />
             </Link>
             {token ? (
-              <Button size="small" variant="text" color="primary">
+              <Button size="small" variant="text" color="primary" onClick={Logout}>
                 Logout
               </Button>
             ) : (
