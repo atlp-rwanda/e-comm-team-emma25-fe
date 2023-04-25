@@ -20,6 +20,11 @@ import CheckoutFailed from "./views/Checkout/CheckoutFailed";
 import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
 import EditSellerProfile from "./views/sellers/EditSellerProfile";
 import SellerProfile from "./views/sellers/SellerProfile";
+import ChangePassword from "./views/changepassword";
+import ResetPassword from "./views/resetpasswordEmail";
+// import ResetPassword from "./views/resetpasswordEmail";
+// import SignIn from "./views/Login";
+import EditProduct from "./views/sellers/EditProduct";
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +36,7 @@ function App() {
         <Route path="/verify-code" element={<VerifyCode />} />
         <Route path="/seller-home" element={<Dashboard />} />
         <Route path="/add-product" element={<AddProducts />} />
+        <Route path="/edit-product" element={<EditProduct />} />
         <Route path="/seller-profile" element={<SellerProfile />} />
         <Route path="/edit-seller-profile" element={<EditSellerProfile />} />
         <Route path="/wishlist" element={<WishList />} />
@@ -40,6 +46,8 @@ function App() {
         <Route path="/result" element={<Results />} />
         <Route path="/cancel" element={<CheckoutFailed />} />
         <Route path="/success" element={<CheckoutSuccess />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { useState } from "react";
+import { Product, FormValues } from "../../interfaces/Product";
+import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { FormValues } from "../../interfaces/Product";
 import {
   Box,
   CssBaseline,
@@ -14,20 +14,48 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  ImageList,
+  ImageListItemBar,
+  ImageListItem,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   AddAPhotoOutlined,
-  CloudUploadOutlined,
   ChevronLeft,
+  Delete,
+  PublishedWithChanges,
 } from "@mui/icons-material";
 import { useForm, Controller } from "react-hook-form";
 import { AxiosClient } from "../../utils/AxiosClient";
 
-const AddProducts = () => {
+const EditProduct = () => {
+  const location = useLocation();
+  const product = location.state as Product;
+  let { pro_images } = product;
   document.title = "Products Management || !SHOP";
   const [inAction, setAction] = useState(false);
+  const [images, setImages] = useState(pro_images);
+
   const navigate = useNavigate();
+  const deleteImg = (imgId: string) => {
+    AxiosClient.delete(`/products/delete/image/${imgId}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status == 200) {
+          pro_images = pro_images.filter((image) => image.ImageID != imgId);
+          setImages(pro_images);
+          toast.success("Image Deleted");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Image not deleted");
+      });
+  };
+  useEffect(() => {
+    setImages(pro_images);
+  }, [pro_images]);
+
   const formData = new FormData();
   const submit = (data) => {
     if (data.quantity <= 0 || data.p_price <= 0) {
@@ -39,7 +67,7 @@ const AddProducts = () => {
       return;
     }
     setAction(true);
-    toast.loading("Saving the product information");
+    toast.loading("Saving the new changes");
 
     formData.append("pname", data.pname as string);
     formData.append("p_price", data.p_price as string);
@@ -49,8 +77,7 @@ const AddProducts = () => {
       const file = data.imgs[i];
       formData.append("imgs", file);
     }
-
-    AxiosClient.post("/products/add", formData, {
+    AxiosClient.patch(`/products/update/${product.ProductID}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -58,11 +85,13 @@ const AddProducts = () => {
       .then((response) => {
         toast.remove();
         toast.success(response.data.message as string, { duration: 5000 });
+        console.log(response);
         setTimeout(() => {
           navigate("/seller-home");
         }, 4000);
       })
       .catch((error) => {
+        console.log(error);
         toast.remove();
         toast.error(error?.response.data.message as string, {
           duration: 10000,
@@ -100,7 +129,7 @@ const AddProducts = () => {
               spacing={2}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Grid item xs={12} sm={8} md={5} lg={5}>
+              <Grid item xs={12} sm={8} md={6} lg={6}>
                 <Box
                   sx={{
                     boxShadow: "0 0 15px 0 rgba(0,0,0,.4)",
@@ -114,7 +143,7 @@ const AddProducts = () => {
                     variant="h6"
                     sx={{ fontWeight: "bold" }}
                   >
-                    ADD A NEW PRODUCT
+                    UPDATE PRODUCT
                   </Typography>
                   <Box mt={5} px={1}>
                     <form
@@ -128,7 +157,7 @@ const AddProducts = () => {
                       <Controller
                         name="pname"
                         control={control}
-                        defaultValue=""
+                        defaultValue={product.ProductName}
                         rules={{ required: true }}
                         render={({ field }) => (
                           <TextField
@@ -152,7 +181,7 @@ const AddProducts = () => {
                         name="p_price"
                         control={control}
                         rules={{ required: true }}
-                        defaultValue={0}
+                        defaultValue={product.ProductPrice}
                         render={({ field }) => (
                           <TextField
                             sx={{ mb: 1 }}
@@ -181,7 +210,7 @@ const AddProducts = () => {
 
                       <Controller
                         name="quantity"
-                        defaultValue={1}
+                        defaultValue={product.quantity}
                         control={control}
                         rules={{ required: true }}
                         render={({ field }) => (
@@ -204,7 +233,7 @@ const AddProducts = () => {
                       <Controller
                         name="desc"
                         control={control}
-                        defaultValue=""
+                        defaultValue={product.ProductDesc}
                         rules={{ required: true }}
                         render={({ field }) => (
                           <TextField
@@ -226,7 +255,7 @@ const AddProducts = () => {
                         )}
                       />
                       <Box
-                        sx={{ textAlign: "left" }}
+                        sx={{ textAlign: "left", mt: 2 }}
                         className="imageList"
                         mb={3}
                       >
@@ -247,15 +276,50 @@ const AddProducts = () => {
                           />
                           <AddAPhotoOutlined />
                         </IconButton>
+                        <Box>
+                          <ImageList
+                            variant="quilted"
+                            sx={{ width: "100%", height: 150 }}
+                            cols={3}
+                            rowHeight={150}
+                          >
+                            {images.map((img, index) => (
+                              <ImageListItem key={index}>
+                                <img
+                                  src={img.ImagePath}
+                                  alt={product.ProductName}
+                                  loading="lazy"
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                  }}
+                                />
+                                <ImageListItemBar
+                                  actionIcon={
+                                    <IconButton
+                                      color="error"
+                                      onClick={() => deleteImg(img.ImageID)}
+                                      aria-label={`info about ${product.ProductName}`}
+                                    >
+                                      <Delete />
+                                    </IconButton>
+                                  }
+                                />
+                              </ImageListItem>
+                            ))}
+                          </ImageList>
+                        </Box>
                       </Box>
                       <Button
                         disabled={inAction}
                         sx={{ mb: 3 }}
                         type="submit"
                         variant="contained"
-                        startIcon={<CloudUploadOutlined />}
+                        startIcon={<PublishedWithChanges />}
                       >
-                        Save Product
+                        Save Changes
                       </Button>
                     </form>
                   </Box>
@@ -270,4 +334,4 @@ const AddProducts = () => {
   );
 };
 
-export default AddProducts;
+export default EditProduct;

@@ -23,14 +23,12 @@ import Paper from "@mui/material/Paper";
 import Theme from "../themes/theme";
 // import { FormEvent } from 'react';
 import { AxiosClient } from "../utils/AxiosClient";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
-import Cookies from "js-cookie";
 const theme = Theme;
 
-export default function SignIn() {
+export default function ChangePassword() {
   const {
     register,
     handleSubmit,
@@ -38,30 +36,23 @@ export default function SignIn() {
   } = useForm();
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const email = location.state.email;
+  if (!email) {
+    navigate("/reset-password");
+  }
   const onSubmit = handleSubmit((data) => {
-    toast.loading("Please wait ....");
+    toast.loading("Sending you a token...");
     setLoading(true);
-    AxiosClient.post("/login", {
-      email: data.email,
-      password: data.password,
+    AxiosClient.patch(`/changepassword/${email}/${data.token}`, {
+      newpassword: data.newpassword,
+      confirmpass: data.confirmpassword,
     })
       .then((response) => {
         toast.remove();
         toast.success(response.data.message);
-        const token = response.data.token;
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        // document.cookie = `token=${token}`;
-        Cookies.set("token", token as string);
-        if (response.data.role == "seller") {
-          navigate("/seller-home");
-        } else if (
-          response.data.role == "user" ||
-          response.data.role == "buyer"
-        ) {
-          navigate("/");
-        } else {
-          navigate("/admin-dashboard");
+        if (response.data.statusCode === 200) {
+          navigate("/login");
         }
       })
       .catch((error) => {
@@ -100,37 +91,41 @@ export default function SignIn() {
             }}
           >
             <Typography component="h1" variant="h5">
-              Sign in
+              Reset Password
             </Typography>
             <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
-                {...register("email", { required: true })}
+                {...register("token", { required: true })}
                 margin="normal"
                 fullWidth
-                label="Email Address"
+                label="Token"
+                autoComplete="off"
+                error={!!errors.token}
+                helperText={errors.token ? "Token is required" : ""}
+              />
+
+              <TextField
+                {...register("newpassword", { required: true })}
+                margin="normal"
+                fullWidth
+                label="New Password "
                 autoComplete="off"
                 //   autoFocus
-                error={!!errors.email}
-                helperText={errors.email ? "Email is required" : ""}
+                error={!!errors.newpassword}
+                helperText={errors.newpassword ? "NewPassword is required" : ""}
               />
               <TextField
-                {...register("password", { required: true })}
+                {...register("confirmpassword", { required: true })}
                 margin="normal"
                 fullWidth
-                label="Password"
-                type="password"
-                id="password"
+                label="ConfirmPassword"
                 autoComplete="off"
-                error={!!errors.password}
-                helperText={errors.password ? "Password is required" : ""}
+                error={!!errors.confirmpassword}
+                helperText={
+                  errors.confirmpassword ? "ConfirmPassword is required" : ""
+                }
               />
-              <Grid container>
-                <Grid item xs>
-                  <Link href="/reset-password" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-              </Grid>
+
               <Button
                 type="submit"
                 fullWidth
@@ -138,13 +133,11 @@ export default function SignIn() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Comfirm
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                  <Link href="/login" variant="body2"></Link>
                 </Grid>
               </Grid>
             </Box>
@@ -155,8 +148,3 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
-<<<<<<< HEAD
-
-export default Login;
-=======
->>>>>>> 8571e1d (initial commit)

@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   return (
     <React.Fragment>
-      <AppBar sx={{ background: "#3C2A21" }}>
+      <AppBar color="primary">
         <Toolbar>
           <Typography sx={{ fontSize: "1.5rem", paddingLeft: "2px" }}>
             !SHOP
