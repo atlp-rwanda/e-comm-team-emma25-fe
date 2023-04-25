@@ -5,13 +5,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Cookies from "js-cookie";
 import { Typography, Box, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
+
 function getCookie(name: string): string | undefined {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-  const gettoken: string | undefined = Cookies.get(name);
+  const gettoken: string | undefined = Cookies.get(name) as string | undefined;
   return gettoken;
 }
 const Notification = () => {
-  const token: string | undefined = getCookie("token");
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<Notifications[] | null>([
     {
@@ -23,21 +22,19 @@ const Notification = () => {
       userId: 0,
     },
   ]);
-
+  const token: string | undefined = getCookie("token");
+  const socket = token
+    ? io(process.env.BACKEND_LINK as string, { query: { token: token } })
+    : undefined;
   useEffect(() => {
-    const socket = token
-      ? io("https://e-comm-team-emma25-bn.onrender.com/", {
-          query: { token: token },
-        })
-      : undefined;
     if (token == undefined) {
       return;
     }
     socket?.on("allnotifications", (nots: Notifications[]) => {
-      setNotifications(nots);
       setLoading(false);
+      setNotifications(nots);
     });
-  }, []);
+  }, [socket, token]);
   if (token == undefined) {
     return <>Please Login</>;
   }
@@ -50,10 +47,12 @@ const Notification = () => {
             <Typography paragraph sx={{ fontWeight: 700 }}>
               Getting notifications ...
             </Typography>{" "}
-            .
           </>
         )}
         <Stack direction="column" gap="5px">
+          {notifications
+            ? notifications.length <= 0 && "You have no notifications"
+            : ""}
           {notifications
             ? notifications.map((noti, indx) => {
                 return (
@@ -62,7 +61,7 @@ const Notification = () => {
                       {noti.subject}
                     </Typography>
                     <Typography paragraph>{noti.message}</Typography>
-                    <Typography sx={{ mt: -5 }} align="right" component="small">
+                    <Typography sx={{ mt: -8 }} align="right" component="small">
                       {noti.createdAt.split("T")[0]}{" "}
                       {noti.createdAt.split("T")[1]}
                     </Typography>
@@ -70,7 +69,7 @@ const Notification = () => {
                   </div>
                 );
               })
-            : ""}
+            : " You have no notifications. "}
         </Stack>
       </Box>
     </>
