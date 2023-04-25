@@ -24,9 +24,6 @@ const Dashboard = () => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    // if (newValue === "Profile") {
-    //   navigate("/seller-profile");
-    // }
   };
 
   const handleLogout = () => {
@@ -82,7 +79,7 @@ const ProductContent = () => {
 
   React.useEffect(() => {
     navigate("/seller-home");
-  }, []);
+  }, [navigate]);
 
   return <Products />;
 };
@@ -96,7 +93,7 @@ const ProfileContent = () => {
 
   React.useEffect(() => {
     navigate("/seller-profile");
-  }, []);
+  }, [navigate]);
 
   return <Profile />;
 };

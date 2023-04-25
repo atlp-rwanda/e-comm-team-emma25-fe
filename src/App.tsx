@@ -9,7 +9,6 @@ import Setup2FA from "./views/setup2FA";
 import VerifyCode from "./views/VerifyCode";
 import Dashboard from "./views/sellers/Dashboard";
 import "./App.scss";
-import SellerProfile from "./views/sellers/SellerProfile";
 import AddProducts from "./views/sellers/AddProduct";
 import "./assets/styles/style.css";
 import Chat from "./views/Chat";
@@ -19,12 +18,13 @@ import Cart from "./views/cart";
 import Results from "./views/Results";
 import CheckoutFailed from "./views/Checkout/CheckoutFailed";
 import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
+import EditSellerProfile from "./views/sellers/EditSellerProfile";
+import SellerProfile from "./views/sellers/SellerProfile";
 import ChangePassword from "./views/changepassword";
 import ResetPassword from "./views/resetpasswordEmail";
 // import ResetPassword from "./views/resetpasswordEmail";
 // import SignIn from "./views/Login";
 import EditProduct from "./views/sellers/EditProduct";
-
 function App() {
   return (
     <BrowserRouter>
@@ -38,6 +38,7 @@ function App() {
         <Route path="/add-product" element={<AddProducts />} />
         <Route path="/edit-product" element={<EditProduct />} />
         <Route path="/seller-profile" element={<SellerProfile />} />
+        <Route path="/edit-seller-profile" element={<EditSellerProfile />} />
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/notifications" element={<UserNotifications />} />
