@@ -12,6 +12,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import Theme from "../themes/theme";
 import { AxiosClient } from "../utils/AxiosClient";
 import { Navigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 // notifications import
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -45,6 +46,7 @@ export default function SignUp() {
   const [message, setMessage] = useState("");
   type AlertColor = "success" | "info" | "warning" | "error";
   const [severityType, setSeverityType] = useState<AlertColor>("warning");
+  const [loading, setLoading] = React.useState(false);
 
   // <MyAlert severity="error" message="This is an error message!" />
 
@@ -61,6 +63,7 @@ export default function SignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     console.log(formData);
     AxiosClient.post("/signup", formData)
       .then((response) => {
@@ -80,6 +83,7 @@ export default function SignUp() {
         <Navigate to="/login" />;
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
         if (error.response.data.error) {
           const notificationMessage: string = error.response.data
@@ -96,7 +100,7 @@ export default function SignUp() {
           setOpen(true);
           setMessage(notificationMessage);
         } else {
-          const notificationMessage = "Sorry Try Again";
+          const notificationMessage = "Network Error, Try Again";
           setSeverityType("warning");
           setOpen(true);
           setMessage(notificationMessage);
@@ -105,6 +109,7 @@ export default function SignUp() {
   };
   return (
     <>
+      <Navbar iconNumber={2} />
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -193,6 +198,7 @@ export default function SignUp() {
                 type="submit"
                 fullWidth
                 variant="contained"
+                disabled={loading}
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign Up
