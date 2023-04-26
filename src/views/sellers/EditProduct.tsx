@@ -4,6 +4,7 @@
 import { Product, FormValues } from "../../interfaces/Product";
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Cookies from "js-cookie";
 import {
   Box,
   CssBaseline,
@@ -32,15 +33,17 @@ const EditProduct = () => {
   const location = useLocation();
   const product = location.state as Product;
   let { pro_images } = product;
+  const token: string = Cookies.get("token");
   document.title = "Products Management || !SHOP";
   const [inAction, setAction] = useState(false);
   const [images, setImages] = useState(pro_images);
 
   const navigate = useNavigate();
   const deleteImg = (imgId: string) => {
-    AxiosClient.delete(`/products/delete/image/${imgId}`)
+    AxiosClient.delete(`/products/delete/image/${imgId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => {
-        console.log(res.data);
         if (res.data.status == 200) {
           pro_images = pro_images.filter((image) => image.ImageID != imgId);
           setImages(pro_images);
@@ -80,6 +83,7 @@ const EditProduct = () => {
     AxiosClient.patch(`/products/update/${product.ProductID}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -91,7 +95,6 @@ const EditProduct = () => {
         }, 4000);
       })
       .catch((error) => {
-        console.log(error);
         toast.remove();
         toast.error(error?.response.data.message as string, {
           duration: 10000,

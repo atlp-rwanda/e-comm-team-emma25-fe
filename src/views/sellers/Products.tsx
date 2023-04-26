@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Product } from "../../interfaces/Product";
+import Cookies from "js-cookie";
 import {
   Box,
   CssBaseline,
@@ -28,6 +29,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Delete from "@mui/icons-material/DeleteForever";
 import { AxiosClient } from "../../utils/AxiosClient";
 import CircularProgress from "@mui/material/CircularProgress";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ApiResponse {
   status: number;
@@ -38,6 +40,8 @@ interface ApiResponse {
 const Products = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [pid, setPid] = useState("");
   const [preview, setPreview] = useState<Product>({
     ProductID: "",
     ProductName: "",
@@ -60,9 +64,13 @@ const Products = () => {
     ],
   });
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setOpenDelete(false);
+  };
   document.title = "Products Management || !SHOP";
   const theme = useTheme();
+  const token: string = Cookies.get("token");
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [products, setProducts] = useState<ApiResponse>({
     status: 0,
@@ -72,20 +80,44 @@ const Products = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const handleDeleteProduct = (ProductID: string) => {
     setIsDeleting(true);
-    console.log(ProductID);
-    setIsDeleting(false);
+    setPid(ProductID);
+    setOpenDelete(true);
+  };
+  const confirmDelete = () => {
+    toast.loading("Hang on while we are processing your request...");
+    AxiosClient.delete(`/products/delete/${pid}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => {
+        toast.remove();
+        if (response.data.statusCode == 201) {
+          setIsDeleting(false);
+          toast.success("Your Product is deleted!");
+          setOpenDelete(false);
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        toast.remove();
+        console.log(error);
+        toast.error("Something went wrong, try again.");
+      });
   };
   const [fetching, setFetching] = useState(true);
-  AxiosClient.get("/products/allSellerCollection")
-    .then((response) => {
-      if (response.data.status == 200) {
-        setProducts(response.data as ApiResponse);
-      }
+  useEffect(() => {
+    AxiosClient.get("/products/allSellerCollection", {
+      headers: { Authorization: `Bearer ${token}` },
     })
-    .catch((error) => {
-      console.log(error);
-    })
-    .finally(() => setFetching(false));
+      .then((response) => {
+        if (response.data.status == 200) {
+          setProducts(response.data as ApiResponse);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => setFetching(false));
+  }, []);
 
   const handlePreviewClick = (prev: Product) => {
     setPreview(prev);
@@ -254,9 +286,43 @@ const Products = () => {
                 </DialogActions>
               </Box>
             </Dialog>
+
+            <Dialog
+              fullScreen={fullScreen}
+              open={openDelete}
+              onClose={handleClose}
+              aria-labelledby="product-modal-delete-title"
+            >
+              <Box>
+                <DialogTitle id="product-modal-delete-title-success">
+                  Confirm to delete
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText mb={2}>
+                    <Typography paragraph>
+                      Once you confirmed to delete this product, you can not
+                      restore it.
+                    </Typography>
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button variant="outlined" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={confirmDelete}
+                  >
+                    Yes, i want to delete
+                  </Button>
+                </DialogActions>
+              </Box>
+            </Dialog>
           </Container>
         </Box>
       </Box>
+      <Toaster />
     </>
   );
 };
