@@ -3,7 +3,6 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -19,21 +18,15 @@ import Alert from "@mui/material/Alert";
 
 const theme = Theme;
 
-export default function SignUp() {
-  type User = {
-    firstName: string;
-    lastName: string;
+export default function RoleUpdate() {
+  type UpdatedRole = {
     email: string;
-    phone_number: string;
-    password: string;
+    role: string;
   };
   // sign up form states
-  const [formData, setFormData] = useState<User>({
-    firstName: "",
-    lastName: "",
+  const [formData, setFormData] = useState<UpdatedRole>({
     email: "",
-    phone_number: "",
-    password: "",
+    role: "",
   });
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,34 +58,25 @@ export default function SignUp() {
     event.preventDefault();
     setLoading(true);
     console.log(formData);
-    AxiosClient.post("/signup", formData)
+    AxiosClient.patch("/authorize", formData)
       .then((response) => {
         // Handle successful response
-        const notificationMessage = `Welcome ${formData.firstName} ${formData.lastName} You successfully registered`;
+        const notificationMessage = `SUCCESS: User with ${formData.email} is now ${formData.role}`;
         setSeverityType("success");
         setOpen(true);
         setMessage(notificationMessage);
         console.log(response);
         setFormData({
-          firstName: "",
-          lastName: "",
           email: "",
-          phone_number: "",
-          password: "",
+          role: "",
         });
-        <Navigate to="/login" />;
+        setLoading(false);
+        <Navigate to="/" />;
       })
       .catch((error) => {
         setLoading(false);
         console.log(error);
-        if (error.response.data.error) {
-          const notificationMessage: string = error.response.data
-            .error as string;
-          // that falls out of the range of 2xx
-          setSeverityType("warning");
-          setOpen(true);
-          setMessage(notificationMessage);
-        } else if (error.response.data.message) {
+        if (error.response.data.message) {
           const notificationMessage: string = error.response.data
             .message as string;
           // user exist
@@ -121,9 +105,8 @@ export default function SignUp() {
               alignItems: "center",
             }}
           >
-            <Typography variant="h6">!shop</Typography>
             <Typography component="h1" variant="h4" color="primary">
-              Sign up
+              ADMIN
             </Typography>
             <Box
               component="form"
@@ -132,65 +115,27 @@ export default function SignUp() {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    value={formData.firstName}
-                    onChange={handleInput}
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    value={formData.lastName}
-                    onChange={handleInput}
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="family-name"
-                  />
-                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     value={formData.email}
                     onChange={handleInput}
+                    autoComplete="email"
+                    name="email"
                     required
                     fullWidth
                     id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    label="User Email To Update"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    value={formData.phone_number}
+                    value={formData.role}
                     onChange={handleInput}
                     required
                     fullWidth
-                    id="phone"
-                    label="Phone Number (eg: 250780....)"
-                    name="phone_number"
-                    autoComplete="phone"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    value={formData.password}
-                    onChange={handleInput}
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
+                    id="role"
+                    label="Role (user,admin,seller)"
+                    name="role"
                   />
                 </Grid>
               </Grid>
@@ -201,15 +146,8 @@ export default function SignUp() {
                 disabled={loading}
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                UPDATE ROLE
               </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link href="/login" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
         </Container>
