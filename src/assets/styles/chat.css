@@ -34,16 +34,20 @@
 
 .container .messages .message.mine {
     display: block;
-    right: 20;
+    right: 20; 
     color: rgb(10, 0, 0);
     background-color: #ddd;
 }
 
 .container .formBox {
     width: 100%;
-    margin-top: 2em;
+    margin-top: 2em;    
 }
-
+.container .formBox form {
+    display: flex;
+    flex-direction: row ;
+    align-items: center;
+}
 .container .formBox form input {
     width: 80%;
     padding: 0.4em 0.5em;

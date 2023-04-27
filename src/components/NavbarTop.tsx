@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import "../assets/styles/navbar.css";
 import Cookies from "js-cookie";
 import SearchBar from "./SearchProduct";
-import { Link } from "react-router-dom";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import Notification from "./Notification";
@@ -29,12 +29,14 @@ import {
   DialogContent,
 } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
 });
 
 function NavbarTop() {
+  const navigate = useNavigate();
   function getCookie(name: string): string | undefined {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     const gettoken: string | undefined = Cookies.get(name);
@@ -53,6 +55,10 @@ function NavbarTop() {
   };
 
   const token = getCookie("token");
+  function Logout() {
+    Cookies.remove("token");
+    navigate("/login");
+  }
   return (
     <div>
       <AppBar position="sticky" color="secondary">
@@ -76,7 +82,7 @@ function NavbarTop() {
                 </Badge>
               </IconButton>
             </Tooltip>
-            <IconButton aria-label="chat" component={Link} to="/chat">
+            <IconButton aria-label="chat" href="/chat">
               <Badge badgeContent={0} color="error">
                 <ChatIcon color="primary" />
               </Badge>
@@ -87,7 +93,12 @@ function NavbarTop() {
               <Avatar />
             </Link>
             {token ? (
-              <Button size="small" variant="text" color="primary">
+              <Button
+                size="small"
+                variant="text"
+                color="primary"
+                onClick={Logout}
+              >
                 Logout
               </Button>
             ) : (
