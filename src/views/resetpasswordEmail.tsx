@@ -27,10 +27,9 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import Cookies from "js-cookie";
 const theme = Theme;
 
-export default function SignIn() {
+export default function ResetPassword() {
   const {
     register,
     handleSubmit,
@@ -42,26 +41,17 @@ export default function SignIn() {
   const onSubmit = handleSubmit((data) => {
     toast.loading("Please wait ....");
     setLoading(true);
-    AxiosClient.post("/login", {
+    AxiosClient.post("/resetpassword/link", {
       email: data.email,
-      password: data.password,
     })
       .then((response) => {
         toast.remove();
         toast.success(response.data.message);
         const token = response.data.token;
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        // document.cookie = `token=${token}`;
-        Cookies.set("token", token as string);
-        if (response.data.role == "seller") {
-          navigate("/seller-home");
-        } else if (
-          response.data.role == "user" ||
-          response.data.role == "buyer"
-        ) {
-          navigate("/");
-        } else {
-          navigate("/admin-dashboard");
+        document.cookie = `token=${token}`;
+        if (response.data.statusCode == 200) {
+          navigate("/changepassword", { state: { email: data.email } });
         }
       })
       .catch((error) => {
@@ -100,7 +90,7 @@ export default function SignIn() {
             }}
           >
             <Typography component="h1" variant="h5">
-              Sign in
+              Forgot Password
             </Typography>
             <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
@@ -113,24 +103,6 @@ export default function SignIn() {
                 error={!!errors.email}
                 helperText={errors.email ? "Email is required" : ""}
               />
-              <TextField
-                {...register("password", { required: true })}
-                margin="normal"
-                fullWidth
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="off"
-                error={!!errors.password}
-                helperText={errors.password ? "Password is required" : ""}
-              />
-              <Grid container>
-                <Grid item xs>
-                  <Link href="/reset-password" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-              </Grid>
               <Button
                 type="submit"
                 fullWidth
@@ -138,13 +110,11 @@ export default function SignIn() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Send
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                  <Link href="/changepassword" variant="body2"></Link>
                 </Grid>
               </Grid>
             </Box>

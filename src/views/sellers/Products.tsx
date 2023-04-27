@@ -76,7 +76,13 @@ const Products = () => {
     setIsDeleting(false);
   };
   const [fetching, setFetching] = useState(true);
-  AxiosClient.get("/products/allSellerCollection")
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzE1LCJlbWFpbCI6InNlbGxlckBnbWFpbC5jb20iLCJuYW1lIjoiU2VsbGVyIFRvU2VsbCIsInBob25lIjpudWxsLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgxOTQ3NzA1LCJleHAiOjE2ODI1NTI1MDV9.76xioS964YQ-ChUEqYIGsN1T9rO8cP3MUvvI6OHaXnE";
+  AxiosClient.get("/products/allSellerCollection", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
     .then((response) => {
       if (response.data.status == 200) {
         setProducts(response.data as ApiResponse);
