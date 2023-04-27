@@ -19,6 +19,7 @@ import Cart from "./views/cart";
 import Results from "./views/Results";
 import CheckoutFailed from "./views/Checkout/CheckoutFailed";
 import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
+import RoleUpdate from "./views/RoleUpdate";
 import ChangePassword from "./views/changepassword";
 import ResetPassword from "./views/resetpasswordEmail";
 // import ResetPassword from "./views/resetpasswordEmail";
@@ -45,6 +46,7 @@ function App() {
         <Route path="/result" element={<Results />} />
         <Route path="/cancel" element={<CheckoutFailed />} />
         <Route path="/success" element={<CheckoutSuccess />} />
+        <Route path="/role-update" element={<RoleUpdate />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/changepassword" element={<ChangePassword />} />
       </Routes>
