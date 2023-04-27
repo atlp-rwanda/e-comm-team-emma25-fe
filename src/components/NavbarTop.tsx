@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
-// import { Input } from '@mui/material';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -17,7 +17,18 @@ import "../assets/styles/navbar.css";
 import Cookies from "js-cookie";
 import SearchBar from "./SearchProduct";
 import { Link } from "react-router-dom";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import Notification from "./Notification";
+import {
+  Box,
+  Divider,
+  Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
+import { CloseRounded } from "@mui/icons-material";
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
@@ -29,6 +40,18 @@ function NavbarTop() {
     const gettoken: string | undefined = Cookies.get(name);
     return gettoken;
   }
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const token = getCookie("token");
   return (
     <div>
@@ -46,15 +69,13 @@ function NavbarTop() {
                 <ShoppingCartIcon color="primary" />
               </Badge>
             </IconButton>
-            <IconButton
-              aria-label="notification"
-              component={Link}
-              to="/notifications"
-            >
-              <Badge badgeContent={0} color="error">
-                <NotificationsIcon color="primary" />
-              </Badge>
-            </IconButton>
+            <Tooltip title="Notifications">
+              <IconButton aria-label="notification" onClick={handleClickOpen}>
+                <Badge badgeContent={0} color="error">
+                  <NotificationsIcon color="primary" />
+                </Badge>
+              </IconButton>
+            </Tooltip>
             <IconButton aria-label="chat" component={Link} to="/chat">
               <Badge badgeContent={0} color="error">
                 <ChatIcon color="primary" />
@@ -82,6 +103,41 @@ function NavbarTop() {
           </Stack>
         </StyledToolbar>
       </AppBar>
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <DialogTitle id="responsive-dialog-title">
+            {"Notifications"}
+          </DialogTitle>
+          <CloseRounded
+            sx={{ mr: 5, cursor: "pointer" }}
+            onClick={handleClose}
+          />
+        </Box>
+        <DialogContent>
+          <Notification />
+        </DialogContent>
+        <Divider />
+        <Typography
+          gutterBottom
+          sx={{ ml: 3, textDecoration: "none" }}
+          component={Link}
+          to="/notifications"
+          color="info"
+        >
+          View all notifications
+        </Typography>
+      </Dialog>
     </div>
   );
 }
