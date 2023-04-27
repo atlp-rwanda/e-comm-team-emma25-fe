@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import Cookies from "js-cookie";
-
+import { Typography } from "@mui/material";
 interface Message {
   sender: string;
   message: string;
@@ -27,7 +27,6 @@ type user = {
   name: string;
   email: string;
 };
-
 function scrollToBottom(ref: React.RefObject<HTMLDivElement>) {
   if (ref.current) {
     ref.current.scrollTop = ref.current.scrollHeight;
@@ -38,11 +37,16 @@ function getCookie(name: string): string | undefined {
   const gettoken: string | undefined = Cookies.get(name);
   return gettoken;
 }
+const token: string | undefined = getCookie("token");
+const socket = token
+  ? io(process.env.BACKEND_LINK as string, { query: { token: token } })
+  : undefined;
 
 const Chatscreen: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<user>({
     id: null,
     role: "",
@@ -50,23 +54,23 @@ const Chatscreen: React.FC = () => {
     phone: null,
     email: "",
   });
+
+  if (!socket && !token) {
+    window.location.reload();
+  }
   const MessageDiv = useRef<HTMLDivElement>(null);
-  console.log(getCookie("token"));
-  const token: string | undefined = getCookie("token");
-  const socket = token
-    ? io(process.env.BACKEND_LINK as string, { query: { token: token } })
-    : undefined;
   const handleScroll: MouseEventHandler<HTMLButtonElement> = () => {
     scrollToBottom(MessageDiv);
   };
+
   useEffect(() => {
-    if (token == undefined) {
+    if (socket == undefined) {
       return;
     }
-    socket?.on("new-user", (user: user) => {
+    socket.on("new-user", (user: user) => {
       setUserData(user);
-      socket.emit("connected", user.name);
-      toast(`${user.name} has joined the chat`, {
+      socket?.emit("connected", user.name);
+      toast(`welcome ${user.name} `, {
         type: "info",
       });
     });
@@ -79,10 +83,13 @@ const Chatscreen: React.FC = () => {
       displayMessage(data.person, data.message);
     });
     socket?.on("recents", (chats: []) => {
+      const allmessages: Message[] = [];
       chats.forEach((chat: Message[]) => {
-        displayMessage(chat[0].sender, chat[0].message);
+        allmessages.push({ sender: chat[0].sender, message: chat[0].message });
       });
-      handleScroll;
+      setMessages(allmessages);
+      setLoading(false);
+      scrollToBottom(MessageDiv);
     });
     socket?.on("bye", (data: chatMessage) => {
       toast(`${data.person} : ${data.message} `, {
@@ -109,16 +116,20 @@ const Chatscreen: React.FC = () => {
       });
       return;
     }
-    socket?.emit("chat", {
+    if (!socket) {
+      toast("Please login", {
+        type: "error",
+      });
+      return;
+    }
+    socket.emit("chat", {
       senderId: userData.id,
       person: userData.name,
       message: inputValue,
     });
-
+    displayMessage(userData.name, inputValue);
     setInputValue("");
     setErrorMessage("");
-    displayMessage(userData.name, inputValue);
-    handleScroll;
   };
   const displayMessage = (person: string, message: string) => {
     setMessages((prevMessages) => [
@@ -138,12 +149,27 @@ const Chatscreen: React.FC = () => {
           <h2>Chats</h2>
         </div>
         <div className="messages" ref={MessageDiv}>
-          {messages ? (
-            <></>
-          ) : (
-            <Box sx={{ display: "flex", alginItems: "center" }}>
-              <CircularProgress color="primary" size="large" />
+          {loading ? (
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                left: "unset",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{ width: "100%", display: "flex", alignItems: "center" }}
+              >
+                <CircularProgress
+                  color="primary"
+                  sx={{ zIndex: "100", margin: "auto" }}
+                />
+              </Box>
             </Box>
+          ) : (
+            <></>
           )}
           {messages.map(({ sender, message }, index) => (
             <div
@@ -172,7 +198,10 @@ const Chatscreen: React.FC = () => {
               type="submit"
               endIcon={<SendIcon />}
             >
-              Send
+              <Typography sx={{ display: { xs: "none", sm: "block" } }}>
+                {" "}
+                Send
+              </Typography>
             </Button>
           </form>
           {errorMessage && <span className="error">{errorMessage}</span>}
