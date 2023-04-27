@@ -8,7 +8,7 @@ module.exports =[{
   optimization: {
     minimizer: [new TerserPlugin({})],
   },
-  performance: {   
+  performance: {
     hints: false
   },
   entry: './src/index.tsx',  
