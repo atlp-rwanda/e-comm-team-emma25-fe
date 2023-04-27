@@ -33,8 +33,7 @@ function BottomNav(props: propstype) {
       <BottomNavigationAction
         label={<Typography variant="body1">Chat</Typography>}
         icon={<ChatIcon />}
-        component={Link}
-        to="/chat"
+        href="/chat"
       />
       <BottomNavigationAction
         label={<Typography variant="body1">Cart</Typography>}
