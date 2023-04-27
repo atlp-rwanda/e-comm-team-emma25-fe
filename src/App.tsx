@@ -22,9 +22,9 @@ import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
 import RoleUpdate from "./views/RoleUpdate";
 import ChangePassword from "./views/changepassword";
 import ResetPassword from "./views/resetpasswordEmail";
-// import ResetPassword from "./views/resetpasswordEmail";
-// import SignIn from "./views/Login";
 import EditProduct from "./views/sellers/EditProduct";
+import Chatting from "./views/sellers/Chatting";
+import SellerNotification from "./views/sellers/SellerNotification";
 
 function App() {
   return (
@@ -36,6 +36,11 @@ function App() {
         <Route path="/two-fa-setup" element={<Setup2FA />} />
         <Route path="/verify-code" element={<VerifyCode />} />
         <Route path="/seller-home" element={<Dashboard />} />
+        <Route
+          path="/seller-home/notifications"
+          element={<SellerNotification />}
+        />
+        <Route path="/seller-home/chat" element={<Chatting />} />
         <Route path="/add-product" element={<AddProducts />} />
         <Route path="/edit-product" element={<EditProduct />} />
         <Route path="/seller-profile" element={<SellerProfile />} />
