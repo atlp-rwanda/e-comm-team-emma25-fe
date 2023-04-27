@@ -42,7 +42,7 @@ const Chatscreen: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<user>({
     id: null,
     role: "",
@@ -82,8 +82,8 @@ const Chatscreen: React.FC = () => {
       chats.forEach((chat: Message[]) => {
         displayMessage(chat[0].sender, chat[0].message);
       });
-      setLoading(false)
-      console.log(loading)
+      setLoading(false);
+      console.log(loading);
       handleScroll;
     });
     socket?.on("bye", (data: chatMessage) => {
@@ -137,14 +137,31 @@ const Chatscreen: React.FC = () => {
           <ArrowCircleDownIcon />
         </IconButton>
         <div className="title">
-          <h2>Chats</h2>       
-        </div>          
-        <div className="messages" ref={MessageDiv}>       
-        {loading ? (<Box sx={{width: '100%' ,height: '100%',left: 'unset',display:'flex',  alignItems: 'center'}}>
-          <Box sx={{width: "100%", display: 'flex', alignItems: 'center' }}>       
-        <CircularProgress color="primary" sx={{zIndex:'100',margin: 'auto'}}/>        
-        </Box>
-          </Box>   ):(<></>) }
+          <h2>Chats</h2>
+        </div>
+        <div className="messages" ref={MessageDiv}>
+          {loading ? (
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                left: "unset",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{ width: "100%", display: "flex", alignItems: "center" }}
+              >
+                <CircularProgress
+                  color="primary"
+                  sx={{ zIndex: "100", margin: "auto" }}
+                />
+              </Box>
+            </Box>
+          ) : (
+            <></>
+          )}
           {messages.map(({ sender, message }, index) => (
             <div
               className={`message ${sender === userData.name ? "mine" : ""}`}

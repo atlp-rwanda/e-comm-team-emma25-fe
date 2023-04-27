@@ -36,7 +36,11 @@ function Wishlistcard(props: wishlistcomponent) {
   return (
     <Card
       key={props.id}
-      sx={{ display: "flex", justifyContent: "space-between", marginBottom: "2px" }}
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: "2px",
+      }}
     >
       <Box sx={{ display: "flex" }}>
         <CardMedia sx={{ width: 151 }} component="img" image={props.image} />

@@ -8,7 +8,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
- 
+
 interface propstype {
   iconNumber: number;
 }

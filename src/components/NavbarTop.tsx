@@ -36,7 +36,7 @@ const StyledToolbar = styled(Toolbar)({
 });
 
 function NavbarTop() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function getCookie(name: string): string | undefined {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     const gettoken: string | undefined = Cookies.get(name);
@@ -55,10 +55,10 @@ function NavbarTop() {
   };
 
   const token = getCookie("token");
-  function Logout(){
-    Cookies.remove('token')
-    navigate('/login')
-    }
+  function Logout() {
+    Cookies.remove("token");
+    navigate("/login");
+  }
   return (
     <div>
       <AppBar position="sticky" color="secondary">
@@ -93,7 +93,12 @@ function NavbarTop() {
               <Avatar />
             </Link>
             {token ? (
-              <Button size="small" variant="text" color="primary" onClick={Logout}>
+              <Button
+                size="small"
+                variant="text"
+                color="primary"
+                onClick={Logout}
+              >
                 Logout
               </Button>
             ) : (
