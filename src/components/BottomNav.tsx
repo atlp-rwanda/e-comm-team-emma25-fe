@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Cookies from "js-cookie";
 
-
 interface propstype {
   iconNumber: number;
 }
@@ -21,13 +20,12 @@ function BottomNav(props: propstype) {
     return gettoken;
   }
   const navigate = useNavigate();
-  const token = getCookie('token')
-  function navigator(location: string){
-    if (token){
-      navigate(location)
-    }
-    else{
-      navigate('/login')
+  const token = getCookie("token");
+  function navigator(location: string) {
+    if (token) {
+      navigate(location);
+    } else {
+      navigate("/login");
     }
   }
   return (
@@ -67,7 +65,7 @@ function BottomNav(props: propstype) {
       <BottomNavigationAction
         label={<Typography variant="body1">profile</Typography>}
         icon={<PersonIcon />}
-        onClick={()=>navigator('/profile')}      
+        onClick={() => navigator("/profile")}
       />
     </BottomNavigation>
   );

@@ -25,31 +25,30 @@ import { AxiosClient } from "../utils/AxiosClient";
 // }
 import Cookies from "js-cookie";
 
-
 function WishList() {
   function getCookie(name: string): string | undefined {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     const gettoken: string | undefined = Cookies.get(name);
     return gettoken;
-  }  
-  const token: string| undefined = getCookie('token')
+  }
+  const token: string | undefined = getCookie("token");
   // const [Wishlistitems,setItems] = useState<wishitems[]>([])
-  console.log('getting the data:')  
-  if(token){
-    AxiosClient.get("/products/wishlist/view",{
-      headers:{
-      Authorization: `Bearer ${token}`
-      }
+  console.log("getting the data:");
+  if (token) {
+    AxiosClient.get("/products/wishlist/view", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .then((response) => {
-      if (response.data.status == 200) {
-      console.log(response)
-      console.log(response.data.data.WishlistItems)
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+      .then((response) => {
+        if (response.data.status == 200) {
+          console.log(response);
+          console.log(response.data.data[0].WishlistItems);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   return (
     <div>
