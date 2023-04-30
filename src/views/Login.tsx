@@ -50,8 +50,10 @@ export default function SignIn() {
         toast.remove();
         toast.success(response.data.message);
         const token = response.data.token;
+        const userId = response.data.userId;
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         // document.cookie = `token=${token}`;
+        localStorage.setItem("userId", userId);
         Cookies.set("token", token as string);
         if (response.data.role == "seller") {
           navigate("/seller-home");

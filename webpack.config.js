@@ -71,6 +71,7 @@ module.exports =[{
     }),
     new dotenv({
       path: path.resolve(__dirname, `./.env`),
+      systemvars: true
     }),
     new TerserPlugin(),
   ],

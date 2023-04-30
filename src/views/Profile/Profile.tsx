@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AxiosClient } from "../../utils/AxiosClient";
-import Cookies from "js-cookie";
 import {
   AppBar,
   Toolbar,
@@ -38,16 +39,25 @@ type SellerData = {
 
 const SellerProfile: React.FC = () => {
   const [sellerData, setSellerData] = useState<SellerData | null>(null);
-  // const userId = 715;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const userId = Cookies.get("userId");
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    AxiosClient.get(`/profile/${userId}`).then((response) =>
-      setSellerData(response.data.data as SellerData)
-    );
-  }, []);
-  console.log(sellerData);
+  const userId = localStorage.getItem("userId");
+  console.log("the userId", userId);
+  console.log(`/profile/${userId}`);
+
+ useEffect(() => {
+   const fetchData = async () => {
+     try {
+       const response = await AxiosClient.get(`/profile/${userId}`);
+       if (response.data.status === 200) {
+         setSellerData(response.data.data as SellerData);
+       }
+     } catch (error) {
+       console.log("error", error);
+     }
+   };
+   fetchData();
+ }, [userId]);
+
+  console.log('seller data', sellerData);
 
   const PAGES = ["Products", "Orders", "Profile"];
 
