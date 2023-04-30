@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-
+import Cookies from "js-cookie";
 import {
   ProfileDetails,
   BillingAddress,
@@ -119,8 +119,7 @@ const EditSellerProfile = () => {
       language: data.language,
     };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzE1LCJlbWFpbCI6InNlbGxlckBnbWFpbC5jb20iLCJuYW1lIjoiU2VsbGVyIFRvU2VsbCIsInBob25lIjpudWxsLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgyMjA1MjQxLCJleHAiOjE2ODI4MTAwNDF9.UcMy782TNhfBsbFzLv2LmGav_cwGGbHK6bSRJyq43PE";
+    const token = Cookies.get("token");
 
     AxiosClient.patch(
       `/profile/edit`,
@@ -131,6 +130,7 @@ const EditSellerProfile = () => {
       },
       {
         headers: {
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           Authorization: `Bearer ${token}`,
         },
       }

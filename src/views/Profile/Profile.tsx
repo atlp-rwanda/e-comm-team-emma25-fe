@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AxiosClient } from "../../utils/AxiosClient";
+import Cookies from "js-cookie";
 import {
   AppBar,
   Toolbar,
@@ -37,8 +38,11 @@ type SellerData = {
 
 const SellerProfile: React.FC = () => {
   const [sellerData, setSellerData] = useState<SellerData | null>(null);
-  const userId = 715;
+  // const userId = 715;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const userId = Cookies.get("userId");
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     AxiosClient.get(`/profile/${userId}`).then((response) =>
       setSellerData(response.data.data as SellerData)
     );
@@ -51,10 +55,6 @@ const SellerProfile: React.FC = () => {
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
-
-  // const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-  //   setValue(newValue);
-  // };
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);

@@ -18,8 +18,8 @@ import Cart from "./views/cart";
 import Results from "./views/Results";
 import CheckoutFailed from "./views/Checkout/CheckoutFailed";
 import CheckoutSuccess from "./views/Checkout/CheckoutSuccess";
-import EditSellerProfile from "./views/sellers/EditSellerProfile";
-import SellerProfile from "./views/sellers/SellerProfile";
+import EditProfile from "./views/Profile/EditProfile";
+import Profile from "./views/Profile/Profile";
 import ChangePassword from "./views/changepassword";
 import ResetPassword from "./views/resetpasswordEmail";
 // import ResetPassword from "./views/resetpasswordEmail";
@@ -40,8 +40,8 @@ function App() {
         <Route path="/seller-home" element={<Dashboard />} />
         <Route path="/add-product" element={<AddProducts />} />
         <Route path="/edit-product" element={<EditProduct />} />
-        <Route path="/seller-profile" element={<SellerProfile />} />
-        <Route path="/edit-seller-profile" element={<EditSellerProfile />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/notifications" element={<UserNotifications />} />

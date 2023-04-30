@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import DrawerComp from "../../components/DrawerComp";
 import Products from "./Products";
-import Profile from "./SellerProfile";
+import Profile from "../Profile/Profile";
 import { Link, useNavigate } from "react-router-dom";
 
 const PAGES = ["Products", "Orders", "Profile"];
@@ -95,7 +95,7 @@ const ProfileContent = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    navigate("/seller-profile");
+    navigate("/profile");
   }, [navigate]);
 
   return <Profile />;
