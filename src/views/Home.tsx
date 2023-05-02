@@ -1,12 +1,14 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import LandingPage from "../components/LandingPage";
+import AllProducts from "../components/AllProducts";
 
 function Home() {
   return (
     <div>
       <Navbar iconNumber={1} />
-      {/* <a href="./login">Login</a> */}
-      {/* <h1>Home Page</h1> */}
+      <LandingPage />
+      <AllProducts />
     </div>
   );
 }
