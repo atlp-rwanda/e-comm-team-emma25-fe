@@ -40,7 +40,10 @@ const Notification = () => {
   }
   return (
     <>
-      <Box component="div">
+      <Box
+        sx={{ backgroundColor: "white", borderRadius: "7px", p: 5 }}
+        component="div"
+      >
         {loading && (
           <>
             <CircularProgress />{" "}
@@ -51,24 +54,27 @@ const Notification = () => {
         )}
         <Stack direction="column" gap="5px">
           {notifications
-            ? notifications.length <= 0 && "You have no notifications"
-            : ""}
-          {notifications
-            ? notifications.map((noti, indx) => {
-                return (
-                  <div key={indx}>
-                    <Typography sx={{ fontWeight: 600 }}>
-                      {noti.subject}
-                    </Typography>
-                    <Typography paragraph>{noti.message}</Typography>
-                    <Typography sx={{ mt: -8 }} align="right" component="small">
-                      {noti.createdAt.split("T")[0]}{" "}
-                      {noti.createdAt.split("T")[1]}
-                    </Typography>
-                    <Divider />
-                  </div>
-                );
-              })
+            ? notifications.length <= 0
+              ? "You have no notifications"
+              : notifications.map((noti, indx) => {
+                  return (
+                    <div key={indx}>
+                      <Typography sx={{ fontWeight: 600 }}>
+                        {noti.subject}
+                      </Typography>
+                      <Typography paragraph>{noti.message}</Typography>
+                      <Typography
+                        sx={{ mt: -8 }}
+                        align="right"
+                        component="small"
+                      >
+                        {noti.createdAt.split("T")[0]}{" "}
+                        {noti.createdAt.split("T")[1]}
+                      </Typography>
+                      <Divider />
+                    </div>
+                  );
+                })
             : " You have no notifications. "}
         </Stack>
       </Box>
