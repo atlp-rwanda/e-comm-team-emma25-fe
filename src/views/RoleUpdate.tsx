@@ -15,6 +15,7 @@ import Navbar from "../components/Navbar";
 // notifications import
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Cookies from "js-cookie";
 
 const theme = Theme;
 
@@ -58,7 +59,13 @@ export default function RoleUpdate() {
     event.preventDefault();
     setLoading(true);
     console.log(formData);
-    AxiosClient.patch("/authorize", formData)
+    // get token from cookies
+    const token = Cookies.get("token") as string;
+    console.log(`token is ${token}`);
+    if (token) {
+      AxiosClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+    AxiosClient.patch("/authorize", formData, {})
       .then((response) => {
         // Handle successful response
         const notificationMessage = `SUCCESS: User with ${formData.email} is now ${formData.role}`;

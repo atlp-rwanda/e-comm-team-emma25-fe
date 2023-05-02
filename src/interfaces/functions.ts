@@ -9,7 +9,7 @@ export function getCookie(name: string): string | undefined {
 export function AddtoWishlist(ProductID: string) {
   const token: string | undefined = getCookie("token");
   if (token) {
-    AxiosClient.post(`/products/wishlist/add/${ProductID}`, {
+    AxiosClient.post(`/products/wishlist/add/${ProductID}`, null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

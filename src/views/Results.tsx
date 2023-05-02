@@ -3,6 +3,10 @@ import Navbar from "../components/Navbar";
 import { useLocation } from "react-router-dom";
 import { AxiosClient } from "../utils/AxiosClient";
 import { Box } from "@mui/material";
+//  cart
+import { AddToCart, AddtoWishlist } from "../interfaces/functions";
+import { Toaster } from "react-hot-toast";
+import { Tooltip } from "@mui/material";
 // products cards
 import {
   Grid,
@@ -14,7 +18,10 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
+
+// icons imports
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 interface Product {
   ProductID: string;
   ProductName: string;
@@ -64,6 +71,7 @@ function Results() {
 
   return (
     <>
+      <Toaster />
       <Navbar iconNumber={1} />
       <Box sx={{ p: 2 }}>
         <Typography variant="h2" gutterBottom>
@@ -100,10 +108,28 @@ function Results() {
                       </Typography>
                     </CardContent>
                   </CardActionArea>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      <AddShoppingCartOutlinedIcon />
-                    </Button>
+                  <CardActions
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Tooltip title="Add to cart">
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => AddToCart(product.ProductID)}
+                      >
+                        <AddShoppingCartOutlinedIcon />
+                      </Button>
+                    </Tooltip>
+
+                    <Tooltip title="Add to wishlist">
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => AddtoWishlist(product.ProductID)}
+                      >
+                        <PlaylistAddCheckIcon />
+                      </Button>
+                    </Tooltip>
                   </CardActions>
                 </Card>
               </Grid>
