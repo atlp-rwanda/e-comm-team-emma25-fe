@@ -23,8 +23,12 @@ import RoleUpdate from "./views/RoleUpdate";
 import ChangePassword from "./views/changepassword";
 import ResetPassword from "./views/resetpasswordEmail";
 import EditProduct from "./views/sellers/EditProduct";
+// import SideBar from "./views/Admin/SideBar";
+// import RolePermission from "./views/Admin/rolePermission";
+import SideBar from "./views/Admin/SideBar";
 import Chatting from "./views/sellers/Chatting";
 import SellerNotification from "./views/sellers/SellerNotification";
+// import RolePermission from "./views/Admin/rolePermission";
 
 function App() {
   return (
@@ -54,7 +58,11 @@ function App() {
         <Route path="/role-update" element={<RoleUpdate />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/admin-dashboard" element={<SideBar />} />
       </Routes>
+      {/* <SideBar /> */}
+      {/* <RolePermission/> */}
     </BrowserRouter>
   );
 }
