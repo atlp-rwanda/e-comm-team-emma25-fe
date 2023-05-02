@@ -35,6 +35,7 @@ function BottomNav(props: propstype) {
       sx={{
         position: "fixed",
         bottom: 0,
+        zIndex: 9999,
         width: "100%",
       }}
     >
