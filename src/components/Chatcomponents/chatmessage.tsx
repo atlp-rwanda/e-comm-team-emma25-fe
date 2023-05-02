@@ -54,10 +54,6 @@ const Chatscreen: React.FC = () => {
     phone: null,
     email: "",
   });
-
-  if (!socket && !token) {
-    window.location.reload();
-  }
   const MessageDiv = useRef<HTMLDivElement>(null);
   const handleScroll: MouseEventHandler<HTMLButtonElement> = () => {
     scrollToBottom(MessageDiv);
