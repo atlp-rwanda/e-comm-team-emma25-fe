@@ -74,3 +74,44 @@ export function AddToCart(ProductID: string) {
       });
   }
 }
+
+export async function Checkout() {
+  const token: string | undefined = getCookie("token");
+  let cartID: undefined | number;
+
+  if (token) {
+    await AxiosClient.get(`/cart/view`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.data.statusCode == 200) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          cartID = response.data.cart.id;
+        }
+      })
+      .catch((error) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        toast.error(error.response.data.message);
+      });
+
+    // payment with stripe
+    if (cartID) {
+      AxiosClient.post(`/checkoutcart/${cartID}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          window.location.href = response.data.url;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          toast(error.response.data.message);
+        });
+    }
+  }
+}
