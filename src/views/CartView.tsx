@@ -49,22 +49,6 @@ const CartView = () => {
       .catch((Error) => {
         console.log(Error);
       });
-    setCartList([
-      {
-        image:
-          "https://imgs.search.brave.com/-esvlglI7UcENyTO4wW42YjPtTD3UIdGMmX4Hq7-6hE/rs:fit:304:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5a/NlI1eGxvd2JnQU82/d2ozVEhUWVZBSGFM/aCZwaWQ9QXBp",
-        productName: "Fanta",
-        price: 500,
-        quantity: 2,
-      },
-      {
-        image:
-          "https://st2.depositphotos.com/1067820/6227/i/600/depositphotos_62278077-stock-photo-coca-cola.jpg",
-        productName: "Cokacola",
-        price: 900,
-        quantity: 3,
-      },
-    ]);
   }, []);
 
   return (
