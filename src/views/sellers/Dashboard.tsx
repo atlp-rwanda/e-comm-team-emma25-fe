@@ -15,6 +15,7 @@ import Profile from "./SellerProfile";
 import { useNavigate } from "react-router-dom";
 import Chatting from "./Chatting";
 import SellerNotification from "./SellerNotification";
+import Cookies from "js-cookie";
 
 const PAGES = ["Products", "Orders", "Profile", "Chat", "Notifications"];
 
@@ -22,17 +23,15 @@ const Dashboard = () => {
   const [value, setValue] = useState<string>(PAGES[0]);
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    // if (newValue === "Profile") {
-    //   navigate("/seller-profile");
-    // }
   };
 
   const handleLogout = () => {
-    // code to handle logout
+    Cookies.remove("token");
+    navigate("/login");
   };
 
   return (

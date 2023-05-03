@@ -13,6 +13,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Cookies from "js-cookie";
+
 import { Notifications, Message } from "@mui/icons-material";
 const PAGES = [
   "Products",
@@ -30,7 +32,8 @@ const DrawerComp = () => {
   const handlePageClick = (page) => {
     setOpenDrawer(false);
     if (page === "LOGOUT") {
-      // Perform logout action
+      Cookies.remove("token");
+      navigate("/login");
     } else if (page === "Profile") {
       navigate("/seller-profile");
     } else {
