@@ -1,5 +1,3 @@
-
-
 import * as React from "react";
 import ProductHeroLayout from "./ProductLayout";
 import { Button, Typography } from "@mui/material";
@@ -36,7 +34,7 @@ export default function LandingPage() {
           align="left"
           variant="h3"
           fontFamily="Frank Ruhl Libre"
-          sx={{ mb: 2, mt: { xs: 4, sm: 10 } }}
+          sx={{ mb: 4, mt: { xs: 4, sm: 10 } }}
         >
           Transform Your Space,
           <br />
@@ -68,4 +66,3 @@ export default function LandingPage() {
     </ProductHeroLayout>
   );
 }
-

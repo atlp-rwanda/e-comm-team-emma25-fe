@@ -77,22 +77,22 @@ const Products = () => {
     setIsDeleting(false);
   };
   const [fetching, setFetching] = useState(true);
-   const token = cookies.get("token");
-   AxiosClient.get("/products/allSellerCollection", {
-     headers: {
-       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-       Authorization: `Bearer ${token}`,
-     },
-   })
-     .then((response) => {
-       if (response.data.status == 200) {
-         setProducts(response.data as ApiResponse);
-       }
-     })
-     .catch((error) => {
-       console.log(error);
-     })
-     .finally(() => setFetching(false));
+  const token = cookies.get("token");
+  AxiosClient.get("/products/allSellerCollection", {
+    headers: {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.data.status == 200) {
+        setProducts(response.data as ApiResponse);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => setFetching(false));
 
   const handlePreviewClick = (prev: Product) => {
     setPreview(prev);
