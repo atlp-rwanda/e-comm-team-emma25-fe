@@ -13,8 +13,10 @@ import DrawerComp from "../../components/DrawerComp";
 import Products from "./Products";
 import Profile from "./SellerProfile";
 import { useNavigate } from "react-router-dom";
+import Chatting from "./Chatting";
+import SellerNotification from "./SellerNotification";
 
-const PAGES = ["Products", "Orders", "Profile"];
+const PAGES = ["Products", "Orders", "Profile", "Chat", "Notifications"];
 
 const Dashboard = () => {
   const [value, setValue] = useState<string>(PAGES[0]);
@@ -24,9 +26,6 @@ const Dashboard = () => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    // if (newValue === "Profile") {
-    //   navigate("/seller-profile");
-    // }
   };
 
   const handleLogout = () => {
@@ -73,6 +72,8 @@ const Dashboard = () => {
       {value === "Products" && <ProductContent />}
       {value === "Orders" && <Orders />}
       {value === "Profile" && <ProfileContent />}
+      {value == "Chat" && <Chatting />}
+      {value == "Notifications" && <SellerNotification />}
     </React.Fragment>
   );
 };

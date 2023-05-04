@@ -132,28 +132,6 @@ const AllProducts = () => {
                     </SplideSlide>
                   ))}
                 </Splide>
-                {/* <Grid
-                  container
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{ mt: 2 }}
-                >
-                  {Array.from({
-                    length: Math.ceil(products.data.length / PRODUCTS_PER_PAGE),
-                  }).map((_, index) => (
-                    <Box key={index} sx={{ mx: 1 }}>
-                      <Button
-                        variant={
-                          slideIndex === index ? "contained" : "outlined"
-                        }
-                        color="primary"
-                        onClick={() => setSlideIndex(index)}
-                      >
-                        {index + 1}
-                      </Button>
-                    </Box>
-                  ))}
-                </Grid> */}
               </>
             )}
           </Container>
