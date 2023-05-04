@@ -28,7 +28,7 @@ import { ToastContainer, toast } from "react-toastify";
 import EditProduct from "./views/sellers/EditProduct";
 import Chatting from "./views/sellers/Chatting";
 import SellerNotification from "./views/sellers/SellerNotification";
-
+import SideBar from "./views/Admin/SideBar";
 function getCookie(name: string): string | undefined {
   const gettoken: string | undefined = Cookies.get(name) as string | undefined;
   return gettoken;
@@ -63,6 +63,7 @@ function App() {
           />
           <Route path="/seller-home/chat" element={<Chatting />} />
           <Route path="/add-product" element={<AddProducts />} />
+          <Route path="/admin-dashboard" element={<SideBar />} />
           <Route path="/edit-product" element={<EditProduct />} />
           <Route path="/seller-profile" element={<SellerProfile />} />
           <Route path="/wishlist" element={<WishList />} />

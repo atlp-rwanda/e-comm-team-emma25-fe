@@ -3,8 +3,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises*/
 
 import * as React from "react";
-// import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import axios from "axios";
 import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,7 +11,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import Box from '@mui/material/Box';
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { Alert, Button, Collapse, IconButton } from "@mui/material";
@@ -25,9 +22,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
+import { AxiosClient } from "../../utils/AxiosClient";
 
 function getCookie(name: string): string | undefined {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   const gettoken: string | undefined = Cookies.get(name);
   return gettoken;
 }
@@ -71,11 +69,13 @@ export default function RolePermission() {
       setRoleError("");
 
       console.log("Token requ", token);
-      await axios
-        .patch("https://e-comm-team-emma25-bn.onrender.com/authorize", {
+      await AxiosClient.patch(
+        "https://e-comm-team-emma25-bn.onrender.com/authorize",
+        {
           email: email,
           roleName: role,
-        })
+        }
+      )
 
         .then((response) => {
           toast.remove();
@@ -101,9 +101,7 @@ export default function RolePermission() {
 
   useEffect(() => {
     async function fetchData() {
-      await axios
-
-        .get("https://e-comm-team-emma25-bn.onrender.com/users")
+      await AxiosClient.get("https://e-comm-team-emma25-bn.onrender.com/users")
         .then(function (response) {
           setUsersData(response.data.users);
         })

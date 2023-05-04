@@ -12,7 +12,6 @@ const SideBar = () => {
         <hr />
         <div className="center">
           <ul>
-            <p className="title">MAIN</p>
             <li>
               <DashboardIcon className="icon" />
               <span>dashboard</span>

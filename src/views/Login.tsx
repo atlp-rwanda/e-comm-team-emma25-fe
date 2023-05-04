@@ -50,8 +50,9 @@ export default function SignIn() {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         // document.cookie = `token=${token}`;
         Cookies.set("token", token as string);
+        localStorage.setItem("phnbr", response.data.phone);
         if (response.data.role == "seller") {
-          navigate("/seller-home");
+          navigate("/verify-code");
         } else if (
           response.data.role == "user" ||
           response.data.role == "buyer"

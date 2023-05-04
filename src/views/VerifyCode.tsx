@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../assets/styles/2fa.css";
 import Button from "../components/Button";
@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { AxiosClient } from "../utils/AxiosClient";
+import { hashPhone } from "../utils/phonHashing";
 
 type FormValues = {
   sentCode: string;
@@ -23,21 +24,53 @@ type APIResponses = {
 function VerifyCode() {
   const location = useLocation();
   const navigate = useNavigate();
-  const phone_number = location.state?.phone_number || null;
-  document.title = "Verify OTP";
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(0);
   const [error, setError] = useState("");
+  const [phone_number, setPhoneNumber] = useState("");
+  const phone = location.state?.phone_number || null;
+  useEffect(() => {
+    if (phone) {
+      setPhoneNumber(phone as string);
+    } else {
+      if (localStorage.getItem("phnbr")) {
+        setPhoneNumber(localStorage.getItem("phnbr") as string);
+      } else {
+        navigate("/two-fa-setup");
+      }
+    }
+  }, [phone]);
+  useEffect(() => {
+    if (phone_number != "") {
+      setLoading(true);
+      toast.loading("Sending OTP to your phone");
+      AxiosClient.get<APIResponses>(`/sendcode/${phone_number}`)
+        .then((response) => {
+          toast.remove();
+          if (response.data.status == 200) {
+            toast.success("Check Your Messages.");
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          toast.remove();
+          if (isAxiosError(error)) {
+            setError(`Network error: ${error.message}`);
+            toast.error(error.message);
+          } else {
+            setError(`Something went wrong `);
+          }
+          setError("Refresh the page.");
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [phone_number]);
+  document.title = "Verify OTP";
+
   const verifyCode = (phone: string, otp: number | string) => {
     toast.loading("Sending your request...");
-    let url: string;
-    if (phone == "" || phone == null || phone == undefined) {
-      url = `/verify/${otp}`;
-    } else {
-      url = `/verify/${phone}/${otp}`;
-    }
     setLoading(true);
-    AxiosClient.get<APIResponses>(url)
+    AxiosClient.get<APIResponses>(`/verify/${phone}/${otp}`)
       .then((response) => {
         toast.remove();
         setResponse(response.data.status);
@@ -68,7 +101,7 @@ function VerifyCode() {
     formState: { errors },
   } = useForm<FormValues>();
   const onSubmit = handleSubmit((data) =>
-    verifyCode(phone_number as string, data.sentCode)
+    verifyCode(phone_number, data.sentCode)
   );
   const checkLength = { value: 6, message: "Code Should be 6 digits" };
   return (
@@ -78,7 +111,7 @@ function VerifyCode() {
         <p>Enter 6-digit code sent on your phone</p>
       </div>
       <form onSubmit={onSubmit}>
-        {phone_number && phone_number}
+        {phone_number && hashPhone(phone_number)}
         <input
           style={{
             borderColor: errors.sentCode?.type == "required" ? "red" : "",
