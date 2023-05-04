@@ -118,11 +118,18 @@ const Chatscreen: React.FC = () => {
       });
       return;
     }
-    socket.emit("chat", {
-      senderId: userData.id,
-      person: userData.name,
-      message: inputValue,
-    });
+    if (userData.id) {
+      socket.emit("chat", {
+        senderId: userData.id,
+        person: userData.name,
+        message: inputValue,
+      });
+    } else {
+      toast("Loading please wait", {
+        type: "error",
+      });
+    }
+
     displayMessage(userData.name, inputValue);
     setInputValue("");
     setErrorMessage("");
