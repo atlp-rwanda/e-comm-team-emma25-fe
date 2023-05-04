@@ -6,9 +6,9 @@ import { Box } from "@mui/material";
 //  cart
 import { AddToCart, AddtoWishlist } from "../interfaces/functions";
 import { Toaster } from "react-hot-toast";
-import { Tooltip } from "@mui/material";
 // products cards
 import {
+  Tooltip,
   Grid,
   Typography,
   Button,

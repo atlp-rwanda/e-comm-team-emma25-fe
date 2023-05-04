@@ -105,10 +105,12 @@ export async function Checkout() {
         },
       })
         .then((response) => {
+          console.log(response);
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           window.location.href = response.data.url;
         })
         .catch((error) => {
+          console.log(error);
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           toast(error.response.data.message);
         });
