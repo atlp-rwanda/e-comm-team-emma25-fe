@@ -28,6 +28,7 @@ import { ToastContainer, toast } from "react-toastify";
 import EditProduct from "./views/sellers/EditProduct";
 import Chatting from "./views/sellers/Chatting";
 import SellerNotification from "./views/sellers/SellerNotification";
+import Profile from "./views/profile";
 
 function getCookie(name: string): string | undefined {
   const gettoken: string | undefined = Cookies.get(name) as string | undefined;
@@ -73,6 +74,7 @@ function App() {
           <Route path="/cancel" element={<CheckoutFailed />} />
           <Route path="/success" element={<CheckoutSuccess />} />
           <Route path="/role-update" element={<RoleUpdate />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/changepassword" element={<ChangePassword />} />
         </Routes>
