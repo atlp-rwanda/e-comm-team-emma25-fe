@@ -112,7 +112,7 @@ export async function Checkout() {
         .catch((error) => {
           console.log(error);
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          toast(error.response.data.message);
+          toast.error(error.response.data.message);
         });
     }
   }

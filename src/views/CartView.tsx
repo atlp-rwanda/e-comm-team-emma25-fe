@@ -90,21 +90,27 @@ const CartView = () => {
           flexDirection: "column",
         }}
       >
-        <Container
-          component="main"
-          maxWidth="sm"
-          sx={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={() => Checkout()}
-            startIcon={<PaymentIcon />}
+        {total > 0 && (
+          <Container
+            component="main"
+            maxWidth="sm"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "2rem",
+            }}
           >
-            Pay Now
-          </Button>
-        </Container>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={() => Checkout()}
+              startIcon={<PaymentIcon />}
+            >
+              Pay Now
+            </Button>
+          </Container>
+        )}
 
         {cartList.map((cart, index) => {
           return (
