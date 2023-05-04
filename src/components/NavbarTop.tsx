@@ -57,7 +57,7 @@ function NavbarTop() {
   const token = getCookie("token");
   function Logout() {
     Cookies.remove("token");
-    navigate("/login");
+    navigate("/");
   }
   return (
     <div>

@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
-import Theme from "../themes/theme";
+import Theme from "../public/themes/theme";
 import { AxiosClient } from "../utils/AxiosClient";
 import { Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
