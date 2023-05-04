@@ -26,16 +26,13 @@ import io from "socket.io-client";
 import { Notifications } from "./interfaces/Notification";
 import { ToastContainer, toast } from "react-toastify";
 import EditProduct from "./views/sellers/EditProduct";
+import Chatting from "./views/sellers/Chatting";
+import SellerNotification from "./views/sellers/SellerNotification";
+
 function getCookie(name: string): string | undefined {
   const gettoken: string | undefined = Cookies.get(name) as string | undefined;
   return gettoken;
 }
-// import SideBar from "./views/Admin/SideBar";
-// import RolePermission from "./views/Admin/rolePermission";
-// import SideBar from "./views/Admin/SideBar";
-// import Chatting from "./views/sellers/Chatting";
-// import SellerNotification from "./views/sellers/SellerNotification";
-// import RolePermission from "./views/Admin/rolePermission";
 
 function App() {
   const token: string | undefined = getCookie("token");
@@ -60,11 +57,11 @@ function App() {
           <Route path="/two-fa-setup" element={<Setup2FA />} />
           <Route path="/verify-code" element={<VerifyCode />} />
           <Route path="/seller-home" element={<Dashboard />} />
-          {/* <Route
-          path="/seller-home/notifications"
-          element={<SellerNotification />}
-        /> */}
-          {/* <Route path="/seller-home/chat" element={<Chatting />} /> */}
+          <Route
+            path="/seller-home/notifications"
+            element={<SellerNotification />}
+          />
+          <Route path="/seller-home/chat" element={<Chatting />} />
           <Route path="/add-product" element={<AddProducts />} />
           <Route path="/edit-product" element={<EditProduct />} />
           <Route path="/seller-profile" element={<SellerProfile />} />

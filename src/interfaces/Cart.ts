@@ -23,3 +23,11 @@ export interface Cart {
     ];
   };
 }
+
+export interface CartContent {
+  image: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  id: number;
+}
