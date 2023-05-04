@@ -26,9 +26,6 @@ const Dashboard = () => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    // if (newValue === "Profile") {
-    //   navigate("/seller-profile");
-    // }
   };
 
   const handleLogout = () => {

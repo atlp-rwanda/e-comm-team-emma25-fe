@@ -20,7 +20,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import Theme from "../themes/theme";
+import Theme from "../public/themes/theme";
 // import { FormEvent } from 'react';
 import { AxiosClient } from "../utils/AxiosClient";
 import { useNavigate } from "react-router-dom";
