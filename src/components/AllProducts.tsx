@@ -125,7 +125,11 @@ const AllProducts = () => {
                             <Button
                               size="small"
                               color="primary"
-                              onClick={() => AddToCart(product.ProductID)}
+                              onClick={() => {
+                                console.log("pressed add to cart");
+                                console.log(product.ProductID);
+                                AddToCart(product.ProductID);
+                              }}
                             >
                               <AddShoppingCartOutlinedIcon />
                             </Button>
@@ -134,7 +138,11 @@ const AllProducts = () => {
                             <Button
                               size="small"
                               color="primary"
-                              onClick={() => AddtoWishlist(product.ProductID)}
+                              onClick={() => {
+                                console.log("pressed add to wishlist");
+                                console.log(product.ProductID);
+                                AddtoWishlist(product.ProductID);
+                              }}
                             >
                               <PlaylistAddCheckIcon />
                             </Button>

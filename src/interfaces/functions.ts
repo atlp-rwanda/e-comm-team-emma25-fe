@@ -25,6 +25,8 @@ export function AddtoWishlist(ProductID: string) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         toast.error(error.response.data.message);
       });
+  } else {
+    toast.error("Login to add add item to wishlist");
   }
 }
 
@@ -50,6 +52,8 @@ export function RemoveWishlistItem(ProductID: string) {
         toast.error(error.response.data.message);
       });
     return checkresposnse;
+  } else {
+    toast.error("Login to continue");
   }
   return checkresposnse;
 }
@@ -72,6 +76,8 @@ export function AddToCart(ProductID: string) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         toast.error(error.response.data.message);
       });
+  } else {
+    toast.error("Login to add Item to Cart");
   }
 }
 
@@ -115,5 +121,7 @@ export async function Checkout() {
           toast.error(error.response.data.message);
         });
     }
+  } else {
+    toast.error("Login to Checkout");
   }
 }
