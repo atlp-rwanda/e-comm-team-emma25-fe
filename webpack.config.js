@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const dotenv = require('dotenv-webpack');
+
 module.exports =[{
   mode: 'production',
   devtool: 'source-map',

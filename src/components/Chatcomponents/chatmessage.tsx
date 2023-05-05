@@ -54,10 +54,6 @@ const Chatscreen: React.FC = () => {
     phone: null,
     email: "",
   });
-
-  if (!socket && !token) {
-    window.location.reload();
-  }
   const MessageDiv = useRef<HTMLDivElement>(null);
   const handleScroll: MouseEventHandler<HTMLButtonElement> = () => {
     scrollToBottom(MessageDiv);
@@ -122,11 +118,18 @@ const Chatscreen: React.FC = () => {
       });
       return;
     }
-    socket.emit("chat", {
-      senderId: userData.id,
-      person: userData.name,
-      message: inputValue,
-    });
+    if (userData.id) {
+      socket.emit("chat", {
+        senderId: userData.id,
+        person: userData.name,
+        message: inputValue,
+      });
+    } else {
+      toast("Loading please wait", {
+        type: "error",
+      });
+    }
+
     displayMessage(userData.name, inputValue);
     setInputValue("");
     setErrorMessage("");

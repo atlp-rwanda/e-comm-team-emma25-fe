@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { FormValues } from "../../interfaces/Product";
+import Cookies from "js-cookie";
 import {
   Box,
   CssBaseline,
@@ -26,6 +27,7 @@ import { AxiosClient } from "../../utils/AxiosClient";
 
 const AddProducts = () => {
   document.title = "Products Management || !SHOP";
+  const token: string = Cookies.get("token");
   const [inAction, setAction] = useState(false);
   const navigate = useNavigate();
   const formData = new FormData();
@@ -53,6 +55,7 @@ const AddProducts = () => {
     AxiosClient.post("/products/add", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {

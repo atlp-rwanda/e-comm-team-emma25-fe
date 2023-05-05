@@ -13,21 +13,35 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Cookies from "js-cookie";
 
-const PAGES = ["Products", "Orders", "Profile", "LOGOUT"];
+import { Notifications, Message } from "@mui/icons-material";
+const PAGES = [
+  "Products",
+  "Orders",
+  "Profile",
+  "Chat",
+  "Notifications",
+  "LOGOUT",
+];
 
 const DrawerComp = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const handlePageClick = (page) => {
     setOpenDrawer(false);
     if (page === "LOGOUT") {
+
       handleLogout();
+
+      Cookies.remove("token");
+      navigate("/");
+
     } else if (page === "Profile") {
       navigate("/seller-profile");
     } else {
@@ -63,6 +77,10 @@ const DrawerComp = () => {
                 {page === "Orders" && (
                   <ShoppingCartIcon sx={{ color: "white" }} />
                 )}
+                {page === "Notifications" && (
+                  <Notifications sx={{ color: "white" }} />
+                )}
+                {page === "Chat" && <Message sx={{ color: "white" }} />}
                 {page === "Profile" && <PersonIcon sx={{ color: "white" }} />}
                 {page === "LOGOUT" && <ExitToAppIcon sx={{ color: "white" }} />}
               </ListItemIcon>

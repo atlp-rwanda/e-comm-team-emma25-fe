@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Button from "@mui/material/Button";
@@ -16,7 +17,7 @@ import Typography from "@mui/material/Typography";
 import "../assets/styles/navbar.css";
 import Cookies from "js-cookie";
 import SearchBar from "./SearchProduct";
-
+import { Link, useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import Notification from "./Notification";
@@ -29,7 +30,6 @@ import {
   DialogContent,
 } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
@@ -57,7 +57,7 @@ function NavbarTop() {
   const token = getCookie("token");
   function Logout() {
     Cookies.remove("token");
-    navigate("/login");
+    navigate("/");
   }
   return (
     <div>

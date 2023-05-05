@@ -6,13 +6,28 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ChatIcon from "@mui/icons-material/Chat";
 import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Cookies from "js-cookie";
 
 interface propstype {
   iconNumber: number;
 }
 function BottomNav(props: propstype) {
+  function getCookie(name: string): string | undefined {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+    const gettoken: string | undefined = Cookies.get(name);
+    return gettoken;
+  }
+  const navigate = useNavigate();
+  const token = getCookie("token");
+  function navigator(location: string) {
+    if (token) {
+      navigate(location);
+    } else {
+      navigate("/login");
+    }
+  }
   return (
     <BottomNavigation
       value={props.iconNumber - 1}
@@ -20,6 +35,7 @@ function BottomNav(props: propstype) {
       sx={{
         position: "fixed",
         bottom: 0,
+        zIndex: 9999,
         width: "100%",
       }}
     >
@@ -50,8 +66,7 @@ function BottomNav(props: propstype) {
       <BottomNavigationAction
         label={<Typography variant="body1">profile</Typography>}
         icon={<PersonIcon />}
-        component={Link}
-        to="/profile"
+        onClick={() => navigator("/profile")}
       />
     </BottomNavigation>
   );

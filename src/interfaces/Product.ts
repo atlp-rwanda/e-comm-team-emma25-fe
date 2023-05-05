@@ -25,3 +25,12 @@ export interface FormValues {
   desc: string;
   imgs: FileList;
 }
+
+export interface wishitems {
+  id: number;
+  wishlistId: number;
+  ProductID: string;
+  createdAt: Date;
+  updatedAt: Date;
+  Product: Product;
+}

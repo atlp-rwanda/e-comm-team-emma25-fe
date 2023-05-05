@@ -14,21 +14,32 @@ import Products from "./Products";
 import Profile from "../Profile/Profile";
 import { Link, useNavigate } from "react-router-dom";
 
-const PAGES = ["Products", "Orders", "Profile"];
+import { useNavigate } from "react-router-dom";
+import Chatting from "./Chatting";
+import SellerNotification from "./SellerNotification";
+import Cookies from "js-cookie";
+
+
+const PAGES = ["Products", "Orders", "Profile", "Chat", "Notifications"];
 
 const Dashboard = () => {
   const [value, setValue] = useState<string>(PAGES[0]);
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
   const handleLogout = () => {
+
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.href = "/";
+
+    Cookies.remove("token");
+    navigate("/");
+
   };
 
   return (
@@ -73,6 +84,8 @@ const Dashboard = () => {
       {value === "Products" && <ProductContent />}
       {value === "Orders" && <Orders />}
       {value === "Profile" && <ProfileContent />}
+      {value == "Chat" && <Chatting />}
+      {value == "Notifications" && <SellerNotification />}
     </React.Fragment>
   );
 };
