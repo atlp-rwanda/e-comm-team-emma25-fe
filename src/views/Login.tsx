@@ -1,12 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable  @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-misused-promises*/
 
 import * as React from "react";
-// import Avatar from '@mui/material/Avatar';
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -18,7 +12,6 @@ import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Theme from "../public/themes/theme";
-// import { FormEvent } from 'react';
 import { AxiosClient } from "../utils/AxiosClient";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -35,24 +28,27 @@ export default function SignIn() {
   } = useForm();
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-
+  const tsver = Boolean(Cookies.get("tsver"));
   const onSubmit = handleSubmit((data) => {
     toast.loading("Please wait ....");
     setLoading(true);
     AxiosClient.post("/login", {
-      email: data.email,
-      password: data.password,
+      email: data.email as string,
+      password: data.password as string,
     })
       .then((response) => {
         toast.remove();
-        toast.success(response.data.message);
-        const token = response.data.token;
+        toast.success(response.data.message as string);
+        const token = response.data.token as string;
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        // document.cookie = `token=${token}`;
-        Cookies.set("token", token as string);
-        localStorage.setItem("phnbr", response.data.phone);
+        Cookies.set("token", token);
+        localStorage.setItem("phnbr", response.data.phone as string);
         if (response.data.role == "seller") {
-          navigate("/verify-code");
+          if (tsver) {
+            navigate("/seller-home");
+          } else {
+            navigate("/verify-code");
+          }
         } else if (
           response.data.role == "user" ||
           response.data.role == "buyer"
@@ -66,7 +62,7 @@ export default function SignIn() {
         toast.remove();
         setLoading(false);
         console.log(error);
-        toast.error(error.response.data.message);
+        toast.error(error.response.data.message as string);
       });
   });
 
@@ -111,7 +107,6 @@ export default function SignIn() {
                 fullWidth
                 label="Email Address"
                 autoComplete="off"
-                //   autoFocus
                 error={!!errors.email}
                 helperText={errors.email ? "Email is required" : ""}
               />

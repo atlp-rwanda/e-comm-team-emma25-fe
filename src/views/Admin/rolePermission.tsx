@@ -55,6 +55,7 @@ export default function RolePermission() {
   const [message, setMessage] = React.useState("");
   const [openMessage, setOpenMessage] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
+  const [doneUpdating, setDoneUpdating] = React.useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,14 +68,13 @@ export default function RolePermission() {
     } else {
       setEmailError("");
       setRoleError("");
-
-      console.log("Token requ", token);
       await AxiosClient.patch(
-        "https://e-comm-team-emma25-bn.onrender.com/authorize",
+        "/authorize",
         {
           email: email,
           roleName: role,
-        }
+        },
+        { headers: { Authorization: `Bearer ${token as string}` } }
       )
 
         .then((response) => {
@@ -82,6 +82,7 @@ export default function RolePermission() {
           toast.success(response.data.message);
           console.log(response.data.message);
           setMessage(response.data.message);
+          setDoneUpdating(true);
         })
         .catch((error) => {
           toast.remove();
@@ -101,7 +102,9 @@ export default function RolePermission() {
 
   useEffect(() => {
     async function fetchData() {
-      await AxiosClient.get("https://e-comm-team-emma25-bn.onrender.com/users")
+      await AxiosClient.get("/users", {
+        headers: { Authorization: `Bearer ${token as string}` },
+      })
         .then(function (response) {
           setUsersData(response.data.users);
         })
@@ -110,7 +113,7 @@ export default function RolePermission() {
         });
     }
     fetchData();
-  });
+  }, [doneUpdating]);
 
   // console.log("response data:", usersData);
   return (
@@ -188,6 +191,7 @@ export default function RolePermission() {
                 <TableCell align="center">Last name</TableCell>
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Phone_number</TableCell>
+                <TableCell align="center">Current Role</TableCell>
                 <TableCell align="center">Set Role</TableCell>
               </TableRow>
             </TableHead>
@@ -208,6 +212,9 @@ export default function RolePermission() {
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     {row.phone_number}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="center">
+                    {row.role.name}
                   </TableCell>
                   <Button
                     onClick={() => {

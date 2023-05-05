@@ -10,6 +10,7 @@ import { isAxiosError } from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { AxiosClient } from "../utils/AxiosClient";
 import { hashPhone } from "../utils/phonHashing";
+import Cookies from "js-cookie";
 
 type FormValues = {
   sentCode: string;
@@ -19,6 +20,17 @@ type APIResponses = {
   message?: string;
   verificationStatus?: string | boolean;
   codeValidity?: string | boolean;
+};
+const phoneNumberHandler = (phoneNumber: string): string | null => {
+  if (phoneNumber.startsWith("7")) {
+    return `+250${phoneNumber}`;
+  } else if (phoneNumber.startsWith("0")) {
+    return `+25${phoneNumber}`;
+  } else if (phoneNumber.startsWith("+")) {
+    return phoneNumber;
+  } else {
+    return null;
+  }
 };
 
 function VerifyCode() {
@@ -31,12 +43,27 @@ function VerifyCode() {
   const phone = location.state?.phone_number || null;
   useEffect(() => {
     if (phone) {
-      setPhoneNumber(phone as string);
+      setPhoneNumber(phoneNumberHandler(phone as string) as string);
     } else {
       if (localStorage.getItem("phnbr")) {
-        setPhoneNumber(localStorage.getItem("phnbr") as string);
-      } else {
-        navigate("/two-fa-setup");
+        setPhoneNumber(
+          phoneNumberHandler(localStorage.getItem("phnbr") as string) as string
+        );
+        if (
+          phoneNumberHandler(localStorage.getItem("phnbr") as string) != null
+        ) {
+          setPhoneNumber(
+            phoneNumberHandler(
+              localStorage.getItem("phnbr") as string
+            ) as string
+          );
+        } else {
+          toast.error(
+            "We can not send a verification code due to invalid phone number update your profile.",
+            { duration: 10000 }
+          );
+          navigate("/seller-home");
+        }
       }
     }
   }, [phone]);
@@ -48,7 +75,7 @@ function VerifyCode() {
         .then((response) => {
           toast.remove();
           if (response.data.status == 200) {
-            toast.success("Check Your Messages.");
+            toast.success("Check Your Messages For OTP.");
             setLoading(false);
           }
         })
@@ -75,10 +102,9 @@ function VerifyCode() {
         toast.remove();
         setResponse(response.data.status);
         if (response.data.codeValidity == true) {
+          Cookies.set("tsver", true, { expires: 30 });
           toast.success("You're verified!", { duration: 4000 });
-          setTimeout(() => {
-            navigate("/seller-home");
-          }, 3000);
+          navigate("/seller-home");
         } else {
           toast.error("Invalid code!");
         }
