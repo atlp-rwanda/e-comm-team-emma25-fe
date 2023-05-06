@@ -28,8 +28,12 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  Snackbar,
+  SnackbarContent,
 } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
+
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
@@ -59,9 +63,52 @@ function NavbarTop() {
     Cookies.remove("token");
     navigate("/");
   }
+  
+  const role = localStorage.getItem("role");
+
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
+const handleDisplayError = (message: string) => {
+  setErrorMessage(message);
+  setOpenSnackbar(true);
+};
+
+const handleLinkClick = () => {
+  if (!role) {
+    handleDisplayError("You have to log in first");
+  }
+};
+
+const handleCloseSnackbar = () => {
+  setOpenSnackbar(false);
+};
+  
   return (
     <div>
       <AppBar position="sticky" color="secondary">
+        <Snackbar
+          open={openSnackbar}
+          // autoHideDuration={2000}
+          onClose={handleCloseSnackbar}
+          disableWindowBlurListener
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <SnackbarContent
+            sx={{ backgroundColor: "red" }}
+            message={errorMessage}
+            action={[
+              <IconButton
+                key="close"
+                size="small"
+                color="inherit"
+                onClick={handleCloseSnackbar}
+              >
+                <CloseIcon />
+              </IconButton>,
+            ]}
+          />
+        </Snackbar>
         <StyledToolbar>
           <Typography variant="h6">
             <Link to="/" className="linkers">
@@ -89,7 +136,18 @@ function NavbarTop() {
             </IconButton>
           </Stack>
           <Stack direction="row" gap="20px">
-            <Link to="/profile">
+            <Link
+              to={
+                role === "seller"
+                  ? "/seller-home"
+                  : role === "admin"
+                  ? "/admin-dashboard"
+                  : role === "user"
+                  ? "/profile"
+                  : ""
+              }
+              onClick={handleLinkClick}
+            >
               <Avatar />
             </Link>
             {token ? (
