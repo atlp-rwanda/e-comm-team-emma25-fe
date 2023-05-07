@@ -16,12 +16,11 @@ import {
 } from "@mui/material";
 import { AxiosClient } from "../utils/AxiosClient";
 import CircularProgress from "@mui/material/CircularProgress";
-// import SwipeableViews from "react-swipeable-views";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { AddToCart, AddtoWishlist } from "../interfaces/functions";
-// icons
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
+import ProductDetails from "./ProductDetails";
 interface ApiResponse {
   status: number;
   data: Product[];
@@ -34,6 +33,7 @@ const AllProducts = () => {
   });
 
   const [fetching, setFetching] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     AxiosClient.get("/products/")
@@ -61,7 +61,9 @@ const AllProducts = () => {
     },
   };
 
-  // Define the number of products to show per page
+  const handleViewClick = (product: Product) => {
+    setSelectedProduct(product);
+  };
 
   return (
     <>
@@ -69,7 +71,7 @@ const AllProducts = () => {
       <Box sx={{ display: "flex", width: "100%", bgcolor: "#E5E5CB" }}>
         <Box component="main" sx={{ flexGrow: 1, pt: 10, pl: 2 }}>
           <Container maxWidth="xl">
-            <Typography variant="h4" sx={{ mb: 1 }}>
+            <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold" }}>
               All Products
             </Typography>
             {fetching ? (
@@ -97,7 +99,7 @@ const AllProducts = () => {
                           image={product.pro_images[0].ImagePath}
                           alt={product.ProductName}
                         />
-                        <CardContent>
+                        <CardContent sx={{ height: 150, overflow: "hidden" }}>
                           <Typography gutterBottom variant="h5" component="div">
                             {product.ProductName}
                           </Typography>
@@ -118,6 +120,7 @@ const AllProducts = () => {
                             size="small"
                             color="primary"
                             variant="contained"
+                            onClick={() => handleViewClick(product)}
                           >
                             View
                           </Button>
@@ -157,6 +160,12 @@ const AllProducts = () => {
           </Container>
         </Box>
       </Box>
+      {selectedProduct && (
+        <ProductDetails
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </>
   );
 };
