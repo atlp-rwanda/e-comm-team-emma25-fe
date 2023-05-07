@@ -40,6 +40,10 @@ export default function SignIn() {
         toast.remove();
         toast.success(response.data.message as string);
         const token = response.data.token as string;
+        const userId = response.data.userId as string; // retrieve userId from response
+        const role = response.data.role as string; // retrieve role from response
+        localStorage.setItem("userId", userId); // store userId in localStorage
+        localStorage.setItem("role", role); // store role in localStorage
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         Cookies.set("token", token);
         localStorage.setItem("phnbr", response.data.phone as string);

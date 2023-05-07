@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useLocation } from "react-router-dom";
 import { AxiosClient } from "../utils/AxiosClient";
-import { Box } from "@mui/material";
 //  cart
 import { AddToCart, AddtoWishlist } from "../interfaces/functions";
 import { Toaster } from "react-hot-toast";
-import { Tooltip } from "@mui/material";
 // products cards
 import {
+  Tooltip,
   Grid,
   Typography,
   Button,
@@ -17,6 +16,8 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Box,
+  CircularProgress,
 } from "@mui/material";
 
 // icons imports
@@ -52,9 +53,11 @@ function Results() {
   const location = useLocation();
   const searchQuery = new URLSearchParams(location.search).get("searchproduct");
   const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [searchInProgress, setSearchInProgress] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchSearchResults = async () => {
+      setSearchInProgress(true);
       try {
         const response = await AxiosClient.get<ResponseData>(
           `/products/search?q=${searchQuery as string}`
@@ -64,6 +67,8 @@ function Results() {
         setSearchResults(searchResultsData);
       } catch (error) {
         console.error(error);
+      } finally {
+        setSearchInProgress(false);
       }
     };
     fetchSearchResults();
@@ -74,7 +79,7 @@ function Results() {
       <Toaster />
       <Navbar iconNumber={1} />
       <Box sx={{ p: 2 }}>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Search results for {searchQuery}
         </Typography>
         {searchResults.length === 0 && (
@@ -82,6 +87,7 @@ function Results() {
         )}
         {searchResults.length > 0 && (
           <Grid container spacing={2} sx={{ justifyContent: "center" }}>
+            {searchInProgress && <CircularProgress />}
             {searchResults.map((product) => (
               <Grid item key={product.ProductID} xs={12} sm={6} md={4} lg={3}>
                 <Card sx={{ height: "100%" }}>

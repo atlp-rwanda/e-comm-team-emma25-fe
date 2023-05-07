@@ -95,6 +95,10 @@ const Products = () => {
           toast.success("Your Product is deleted!");
           setOpenDelete(false);
           window.location.reload();
+        } else {
+          setIsDeleting(false);
+          toast.error("Something went wrong...");
+          setOpenDelete(false);
         }
       })
       .catch((error) => {

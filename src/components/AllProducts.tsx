@@ -12,12 +12,16 @@ import {
   CardContent,
   Typography,
   Button,
+  Tooltip,
 } from "@mui/material";
 import { AxiosClient } from "../utils/AxiosClient";
 import CircularProgress from "@mui/material/CircularProgress";
 // import SwipeableViews from "react-swipeable-views";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-
+import { AddToCart, AddtoWishlist } from "../interfaces/functions";
+// icons
+import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 interface ApiResponse {
   status: number;
   data: Product[];
@@ -117,16 +121,32 @@ const AllProducts = () => {
                           >
                             View
                           </Button>
-                          <Button
-                            sx={{
-                              mb: 1,
-                            }}
-                            size="small"
-                            color="primary"
-                            variant="contained"
-                          >
-                            Add to cart
-                          </Button>
+                          <Tooltip title="Add to cart">
+                            <Button
+                              size="small"
+                              color="primary"
+                              onClick={() => {
+                                console.log("pressed add to cart");
+                                console.log(product.ProductID);
+                                AddToCart(product.ProductID);
+                              }}
+                            >
+                              <AddShoppingCartOutlinedIcon />
+                            </Button>
+                          </Tooltip>
+                          <Tooltip title="Add to wishlist">
+                            <Button
+                              size="small"
+                              color="primary"
+                              onClick={() => {
+                                console.log("pressed add to wishlist");
+                                console.log(product.ProductID);
+                                AddtoWishlist(product.ProductID);
+                              }}
+                            >
+                              <PlaylistAddCheckIcon />
+                            </Button>
+                          </Tooltip>
                         </CardActions>
                       </Card>
                     </SplideSlide>
