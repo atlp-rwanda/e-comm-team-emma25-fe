@@ -44,8 +44,8 @@ const EditProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       const userId = localStorage.getItem("userId");
-        const response = await AxiosClient.get(`/profile/${userId}`);
-        console.log(`response data ${response}`);
+      const response = await AxiosClient.get(`/profile/${userId}`);
+      console.log(`response data ${response}`);
       const sellerData = response.data.data;
       console.log("userData", sellerData);
 
@@ -180,8 +180,7 @@ const EditProfile = () => {
                       required: true,
                       pattern: {
                         value: /^\+250\s?\d{3}\s?\d{3}\s?\d{3}$/,
-                        message:
-                          "Please enter this format +250780301050.",
+                        message: "Please enter this format +250780301050.",
                       },
                     })}
                     error={!!errors.phoneNumber}
