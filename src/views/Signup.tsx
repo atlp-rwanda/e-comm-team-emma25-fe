@@ -11,7 +11,9 @@ import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import Theme from "../public/themes/theme";
 import { AxiosClient } from "../utils/AxiosClient";
-import { Navigate } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import Navbar from "../components/Navbar";
 // notifications import
 import Snackbar from "@mui/material/Snackbar";
@@ -40,6 +42,8 @@ export default function SignUp() {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const navigate = useNavigate();
 
   // notifications states
   const [open, setOpen] = useState(false);
@@ -73,14 +77,15 @@ export default function SignUp() {
         setOpen(true);
         setMessage(notificationMessage);
         console.log(response);
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone_number: "",
-          password: "",
-        });
-        <Navigate to="/login" />;
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const token = response.data.token;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${
+          token as string
+        }`;
+        // document.cookie = `token=${token}`;
+        Cookies.set("token", token as string);
+        navigate("/");
       })
       .catch((error) => {
         setLoading(false);
