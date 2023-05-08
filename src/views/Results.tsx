@@ -30,7 +30,7 @@ interface Product {
   quantity: number;
   available: boolean;
   ProductDesc: string;
-  ProductOwner: string; 
+  ProductOwner: string;
   createdAt: string;
   updatedAt: string;
   pro_images: Image[];
