@@ -3,20 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AxiosClient } from "../../utils/AxiosClient";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  useMediaQuery,
-  useTheme,
-  Avatar,
-  Box,
-} from "@mui/material";
-import DrawerComp from "../../components/DrawerComp";
+import { Typography, Avatar, Box } from "@mui/material";
 import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSettingsRounded";
 import PersonIcon from "@mui/icons-material/Person";
-
 type SellerData = {
   firstName: string;
   lastName: string;
@@ -39,7 +28,7 @@ type SellerData = {
   };
 };
 
-const Profile: React.FC = () => {
+const ProfileComp: React.FC = () => {
   const [sellerData, setSellerData] = useState<SellerData | null>(null);
   const userId = localStorage.getItem("userId");
   console.log("the userId", userId);
@@ -61,9 +50,6 @@ const Profile: React.FC = () => {
   }, [userId]);
 
   console.log("user data", sellerData);
-
-  const theme = useTheme();
-  const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
   const role = localStorage.getItem("role");
 
@@ -96,39 +82,8 @@ const Profile: React.FC = () => {
       );
     }
   };
-
-  const handleLogout = () => {
-    localStorage.clear(); // clear localStorage
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "/";
-  };
-
   return (
     <>
-      <AppBar color="primary">
-        <Toolbar>
-          <Typography sx={{ fontSize: "1.5rem", paddingLeft: "2px" }}>
-            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-              !SHOP
-            </Link>
-          </Typography>
-          {isMatch ? (
-            <>
-              <DrawerComp />
-            </>
-          ) : (
-            <>
-              <Button
-                sx={{ marginLeft: "auto", color: "primary" }}
-                variant="contained"
-                onClick={handleLogout}
-              >
-                LOGOUT
-              </Button>
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
       <div
         style={{
           display: "flex",
@@ -348,4 +303,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ProfileComp;

@@ -61,29 +61,30 @@ function NavbarTop() {
   const token = getCookie("token");
   function Logout() {
     Cookies.remove("token");
+    Cookies.remove("role");
     navigate("/");
   }
-  
+
   const role = localStorage.getItem("role");
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-const handleDisplayError = (message: string) => {
-  setErrorMessage(message);
-  setOpenSnackbar(true);
-};
+  const handleDisplayError = (message: string) => {
+    setErrorMessage(message);
+    setOpenSnackbar(true);
+  };
 
-const handleLinkClick = () => {
-  if (!role) {
-    handleDisplayError("You have to log in first");
-  }
-};
+  const handleLinkClick = () => {
+    if (!role) {
+      handleDisplayError("You have to log in first");
+    }
+  };
 
-const handleCloseSnackbar = () => {
-  setOpenSnackbar(false);
-};
-  
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
   return (
     <div>
       <AppBar position="sticky" color="secondary">

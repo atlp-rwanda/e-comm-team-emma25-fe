@@ -53,6 +53,7 @@ export default function SignIn() {
         localStorage.setItem("role", role); // store role in localStorage
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         Cookies.set("token", token as string);
+        Cookies.set("role", response.data.role as string);
         if (response.data.role == "seller") {
           navigate("/seller-home");
         } else if (

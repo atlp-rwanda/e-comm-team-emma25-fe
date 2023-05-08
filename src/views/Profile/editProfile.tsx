@@ -21,10 +21,11 @@ import {
   TextField,
   MenuItem,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Save } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { AxiosClient } from "../../utils/AxiosClient";
+import { getCookie } from "../../interfaces/functions";
 
 const EditProfile = () => {
   const [inAction, setAction] = useState(false);
@@ -44,8 +45,8 @@ const EditProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       const userId = localStorage.getItem("userId");
-        const response = await AxiosClient.get(`/profile/${userId}`);
-        console.log(`response data ${response}`);
+      const response = await AxiosClient.get(`/profile/${userId}`);
+      console.log(`response data ${response}`);
       const sellerData = response.data.data;
       console.log("userData", sellerData);
 
@@ -88,6 +89,19 @@ const EditProfile = () => {
     };
     fetchData();
   }, []);
+
+  const naviagetuser = () => {
+    const role: string | undefined = getCookie("role");
+    if (role == "user") {
+      navigate("/profile");
+    }
+    if (role == "seller") {
+      navigate("/seller-home");
+    }
+    if (role == "admin") {
+      navigate("/admin-dashboard");
+    }
+  };
 
   const submit = (data) => {
     setAction(true);
@@ -136,7 +150,7 @@ const EditProfile = () => {
       .then((response) => {
         toast.remove();
         toast.success(response.data.message as string, { duration: 5000 });
-        navigate("/profile");
+        naviagetuser();
       })
       .catch((error) => {
         setAction(false);
@@ -156,8 +170,9 @@ const EditProfile = () => {
               <Button
                 variant="contained"
                 startIcon={<ChevronLeft />}
-                component={Link}
-                to="/profile"
+                onClick={() => {
+                  naviagetuser();
+                }}
               >
                 Back Home
               </Button>
@@ -180,8 +195,7 @@ const EditProfile = () => {
                       required: true,
                       pattern: {
                         value: /^\+250\s?\d{3}\s?\d{3}\s?\d{3}$/,
-                        message:
-                          "Please enter this format +250780301050.",
+                        message: "Please enter this format +250780301050.",
                       },
                     })}
                     error={!!errors.phoneNumber}

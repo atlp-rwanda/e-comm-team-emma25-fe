@@ -125,3 +125,32 @@ export async function Checkout() {
     toast.error("Login to Checkout");
   }
 }
+
+export function setOrderstatus(orderid: number, value: string) {
+  const token: string | undefined = getCookie("token");
+
+  if (token) {
+    AxiosClient.patch(
+      `/orders/change/${orderid}`,
+      {
+        status: value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+        if (response.data.statusCode == 200) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          toast.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        toast.error(error.response.data.message);
+      });
+  }
+}
