@@ -180,7 +180,7 @@ export default function SignUp() {
                     required
                     fullWidth
                     id="phone"
-                    label="Phone Number (eg: 250780....)"
+                    label="Phone Number (eg: +250780....)"
                     name="phone_number"
                     autoComplete="phone"
                   />

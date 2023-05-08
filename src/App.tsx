@@ -69,6 +69,7 @@ function App() {
           />
           <Route path="/seller-home/chat" element={<Chatting />} />
           <Route path="/add-product" element={<AddProducts />} />
+          <Route path="/admin-dashboard" element={<SideBar />} />
           <Route path="/edit-product" element={<EditProduct />} />
           <Route path="/wishlist" element={<WishList />} />
           <Route path="/chat" element={<Chat />} />
