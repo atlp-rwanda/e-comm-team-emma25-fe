@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import DrawerComp from "../../components/DrawerComp";
 import Products from "./Products";
-import Profile from "./SellerProfile";
+import Profile from "../Profile/userProfile";
 import { useNavigate } from "react-router-dom";
 import Chatting from "./Chatting";
 import SellerNotification from "./SellerNotification";
@@ -31,7 +31,8 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     Cookies.remove("token");
-    navigate("/login");
+    localStorage.clear(); // Clear all items in localStorage
+    navigate("/");
   };
 
   return (
@@ -73,7 +74,7 @@ const Dashboard = () => {
       {/* body content */}
       {value === "Products" && <ProductContent />}
       {value === "Orders" && <Orders />}
-      {value === "Profile" && <ProfileContent />}
+      {value === "Profile" && <Profile />}
       {value == "Chat" && <Chatting />}
       {value == "Notifications" && <SellerNotification />}
     </React.Fragment>
@@ -92,16 +93,6 @@ const ProductContent = () => {
 
 const Orders = () => {
   return <div>Orders</div>;
-};
-
-const ProfileContent = () => {
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    navigate("/seller-profile");
-  }, []);
-
-  return <Profile />;
 };
 
 export default Dashboard;

@@ -9,7 +9,6 @@ import Setup2FA from "./views/setup2FA";
 import VerifyCode from "./views/VerifyCode";
 import Dashboard from "./views/sellers/Dashboard";
 import "./App.scss";
-import SellerProfile from "./views/sellers/SellerProfile";
 import AddProducts from "./views/sellers/AddProduct";
 import Chat from "./views/Chat";
 import WishList from "./views/WishList";
@@ -28,7 +27,8 @@ import { ToastContainer, toast } from "react-toastify";
 import EditProduct from "./views/sellers/EditProduct";
 import Chatting from "./views/sellers/Chatting";
 import SellerNotification from "./views/sellers/SellerNotification";
-import Profile from "./views/profile";
+import Profile from "./views/Profile/userProfile";
+import EditProfile from "./views/Profile/editProfile";
 
 function getCookie(name: string): string | undefined {
   const gettoken: string | undefined = Cookies.get(name) as string | undefined;
@@ -65,7 +65,6 @@ function App() {
           <Route path="/seller-home/chat" element={<Chatting />} />
           <Route path="/add-product" element={<AddProducts />} />
           <Route path="/edit-product" element={<EditProduct />} />
-          <Route path="/seller-profile" element={<SellerProfile />} />
           <Route path="/wishlist" element={<WishList />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/notifications" element={<UserNotifications />} />
@@ -75,6 +74,7 @@ function App() {
           <Route path="/success" element={<CheckoutSuccess />} />
           <Route path="/role-update" element={<RoleUpdate />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/changepassword" element={<ChangePassword />} />
         </Routes>
