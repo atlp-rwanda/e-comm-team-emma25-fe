@@ -8,6 +8,7 @@ import Signup from "./views/Signup";
 import Setup2FA from "./views/setup2FA";
 import VerifyCode from "./views/VerifyCode";
 import Dashboard from "./views/sellers/Dashboard";
+import "./assets/styles/order.css";
 import "./App.scss";
 import AddProducts from "./views/sellers/AddProduct";
 import Chat from "./views/Chat";
@@ -27,9 +28,12 @@ import { ToastContainer, toast } from "react-toastify";
 import EditProduct from "./views/sellers/EditProduct";
 import Chatting from "./views/sellers/Chatting";
 import SellerNotification from "./views/sellers/SellerNotification";
-import Profile from "./views/Profile/userProfile";
+// import Profile from "./views/Profile/userProfile";
 import EditProfile from "./views/Profile/editProfile";
+import Orders from "./views/Order";
 import SideBar from "./views/Admin/SideBar";
+import AdminOrders from "./views/Admin/AdminOrders";
+import Profile from "./views/profile";
 
 function getCookie(name: string): string | undefined {
   const gettoken: string | undefined = Cookies.get(name) as string | undefined;
@@ -79,6 +83,10 @@ function App() {
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/changepassword" element={<ChangePassword />} />
+          <Route path="/user-orders" element={<Orders />} />
+          <Route path="/admin-dashboard" element={<SideBar />} />
+          <Route path="/admin-dashboard/orders" element={<AdminOrders />} />
+          <Route path="/admin-dashboard/users" element={<AdminOrders />} />
         </Routes>
       </BrowserRouter>
     </>

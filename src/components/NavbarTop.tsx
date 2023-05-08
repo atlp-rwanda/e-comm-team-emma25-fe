@@ -61,6 +61,7 @@ function NavbarTop() {
   const token = getCookie("token");
   function Logout() {
     Cookies.remove("token");
+    Cookies.remove("role");
     navigate("/");
   }
 

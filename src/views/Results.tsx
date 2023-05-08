@@ -23,6 +23,8 @@ import {
 // icons imports
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
+// view one product
+import ProductDetails from "../components/ProductDetails";
 interface Product {
   ProductID: string;
   ProductName: string;
@@ -54,6 +56,7 @@ function Results() {
   const searchQuery = new URLSearchParams(location.search).get("searchproduct");
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [searchInProgress, setSearchInProgress] = useState<boolean>(true);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const fetchSearchResults = async () => {
@@ -74,6 +77,10 @@ function Results() {
     fetchSearchResults();
   }, [searchQuery]);
 
+  const handleViewClick = (product: Product) => {
+    setSelectedProduct(product);
+  };
+
   return (
     <>
       <Toaster />
@@ -91,7 +98,7 @@ function Results() {
             {searchResults.map((product) => (
               <Grid item key={product.ProductID} xs={12} sm={6} md={4} lg={3}>
                 <Card sx={{ height: "100%" }}>
-                  <CardActionArea>
+                  <CardActionArea onClick={() => handleViewClick(product)}>
                     <CardMedia
                       component="img"
                       height="140"
@@ -143,6 +150,12 @@ function Results() {
           </Grid>
         )}
       </Box>
+      {selectedProduct && (
+        <ProductDetails
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </>
   );
 }

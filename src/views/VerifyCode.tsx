@@ -66,7 +66,7 @@ function VerifyCode() {
         }
       }
     }
-  }, [phone]);
+  }, []);
   useEffect(() => {
     if (phone_number != "") {
       setLoading(true);
@@ -104,7 +104,7 @@ function VerifyCode() {
         if (response.data.codeValidity == true) {
           Cookies.set("tsver", true, { expires: 30 });
           toast.success("You're verified!", { duration: 4000 });
-          navigate("/seller-home");
+          window.location.href = "/seller-home";
         } else {
           toast.error("Invalid code!");
         }

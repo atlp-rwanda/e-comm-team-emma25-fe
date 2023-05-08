@@ -1,0 +1,26 @@
+.ordercomp{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white; 
+    padding: 5px
+}
+.backOrder{
+    background-image: url(https://resylian.com/wp-content/uploads/2020/08/AdobeStock_366186056.jpeg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 100em;
+    background-attachment: fixed;    
+}
+.bottomdiv{
+    position: absolute;
+    bottom: 0;
+}
+@media (max-width: '600px'){
+    .ordercomp{
+        flex-direction: column;
+    }
+    .backOrder{
+        background-image: unset;
+    }
+}
